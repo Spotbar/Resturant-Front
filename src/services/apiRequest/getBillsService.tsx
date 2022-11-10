@@ -5,11 +5,11 @@ export default async function getBillsService() {
 
   return http.get(
     "/posts",
-    {
-
-    },
     // {
-    //   headers: await headers(),
-    // }
+
+    // },
+    {
+      headers: await headers(),
+    }
   );
 }
