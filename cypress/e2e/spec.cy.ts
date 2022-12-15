@@ -9,7 +9,10 @@ describe("App Component", () => {
     // cy.get('[placeholder="نام کاربری"]');
     // cy.get('[placeholder="کلمه عبور"]');
 
-   
-    cy.get('[placeholder="نام کاربری"]').parent('div').find('button')
+    // cy.get('[placeholder="نام کاربری"]').parent("div").find("button");
+
+    cy.get(".gap-3").then((firstForm) => {
+      cy.wrap(firstForm).find('[placeholder="نام کاربری"]');
+    });
   });
 });
