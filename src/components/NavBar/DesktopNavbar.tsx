@@ -1,9 +1,32 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
+  const [lan, setLan] = useState("en");
+
+  useEffect(() => {
+    i18n.changeLanguage(lan);
+  }, [lan]);
+
+  const options = [
+    {
+      label: "english",
+      value: "en",
+    },
+    {
+      label: "فارسی",
+      value: "fa",
+    },
+  ];
+
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setLan(value);
+  };
+
   return (
     <nav className="  bg-white p-4 shadow-lg sticky top-0 z-10 hidden md:block">
       <div className="container mx-auto 2xl:max-w-screen-2xl flex items-center justify-between">
@@ -23,6 +46,12 @@ const Navbar = () => {
               عنوان
             </li> */}
         </ul>
+
+        <select value={lan} onChange={handleChange}>
+          {options.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))}
+        </select>
       </div>
     </nav>
   );
