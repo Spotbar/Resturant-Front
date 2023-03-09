@@ -9,9 +9,9 @@ const Navbar = (props: Props) => {
   const { t, i18n } = useTranslation();
   const [lan, setLan] = useState("en");
 
-  useEffect(() => {
-    i18n.changeLanguage(lan);
-  }, [lan]);
+  // useEffect(() => {
+  //   i18n.changeLanguage(lan);
+  // }, [lan]);
 
   const options = [
     {
