@@ -6,7 +6,7 @@ import Main from "../Main";
 const Reserve = () => {
   return (
     <Main>
-      <div>
+      <div className="h-screen">
         <SelectDate />
         <CreateOrder />
         <ReserveList />
