@@ -50,7 +50,7 @@ const SharedList = () => {
     }
   };
   return (
-    <div>
+    <div className="w-full">
       <div className="flex flex-row">
         <Select
           className="w-1/2"
@@ -73,27 +73,43 @@ const SharedList = () => {
           })}
         />
         <button
-          className=" mx-5 border border-1 bg-orange-200 border-amber-600   p-2 rounded-md text-amber-600 text-base"
+          className=" block whitespace-nowrap mx-5 border border-1 bg-orange-200 border-amber-600   p-2 rounded-md text-amber-600 text-sm sm:text-base"
           onClick={() => {
             if (employee.id != "") {
-            
-                setGrouplist((grouplist) => [
-                    ...grouplist,
-                    { id: employee.label, name: employee.label, cost: "" },
-                  ]);
+              var ides = grouplist.map((item) => item.name);
+              console.log("ides" + ides);
+              var isDuplicate = ides.includes(employee.label);
+              console.log(isDuplicate);
 
-                 
+              if (!isDuplicate) {
+                setGrouplist((grouplist) => [
+                  ...grouplist,
+                  { id: employee.label, name: employee.label, cost: "50000" },
+                ]);
+              }
             }
- 
           }}
         >
-          افزودن به لیست مشترک
+          افزودن مشترک
         </button>
       </div>
-      <div>
+      <div
+        className={
+          "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-2"
+        }
+      >
         {grouplist?.map((item) => (
-          <div key={item.id}>
-            <div>{item.name}</div>
+          <div
+            key={item.id}
+            className={
+              "flex flex-col justify-center items-center p-2 shadow-lg border border-1 border-amber-600 rounded-md "
+            }
+          >
+            <p className=" ">{item.name}</p>
+            {/* <input
+            defaultValue={item.cost}
+
+            /> */}
             <div>{item.cost}</div>
           </div>
         ))}

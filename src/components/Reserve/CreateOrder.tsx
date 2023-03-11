@@ -5,11 +5,9 @@ import Restaurant from "../../Interface/Restaurant";
 import SelectCustomStyles from "../../styles/SelectCustomStyles";
 import SharedList from "./SharedList";
 
-
-
 const CreateOrder = () => {
   const FactorNumberList: FactorNumber[] = [
-       {
+    {
       id: "1",
       label: "123",
     },
@@ -61,6 +59,8 @@ const CreateOrder = () => {
       label: "الیپی",
     },
   ];
+
+  const [isSheard, setIsShared] = useState<boolean>(false);
 
   const [factorNumber, setFactorNumber] = useState<FactorNumber>({
     id: "",
@@ -152,20 +152,23 @@ const CreateOrder = () => {
       </div>
 
       {/* shared */}
-      <div className="w-full m-5">
-        <input
-          className="m-1 cursor-pointer accent-amber-600 focus:accent-amber-600"
-          type="checkbox"
-          name="check"
-          // defaultChecked={check} // React checkbox onChange get value
-          onChange={(e) => {
-            // setCheck(!check);
-          }}
-        />
+      <div className="w-full flex flex-col sm:flex-row items-start m-5 ">
+        <div className="flex flow-row  ">
+          <input
+            className="cursor-pointer accent-amber-600 focus:accent-amber-600"
+            type="checkbox"
+            name="check"
+            defaultChecked={isSheard} 
+            onChange={(e) => {
+              setIsShared(!isSheard);
+            }}
+          />
 
-        <label className=" p-1  cursor-pointer">سفارش اشتراکی</label>
-
-        <SharedList/>
+          <label className=" block whitespace-nowrap w-full h-fit p-1 cursor-pointer  ">
+            سفارش اشتراکی
+          </label>
+        </div>
+        {isSheard ? <SharedList /> : <div></div>}
       </div>
 
       {/* create */}
