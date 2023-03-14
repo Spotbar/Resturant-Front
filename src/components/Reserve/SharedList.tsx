@@ -50,7 +50,7 @@ const SharedList = () => {
     }
   };
   return (
-    <div className="w-full">
+    <div className="w-full ">
       <div className="flex flex-row">
         <Select
           className="w-1/2"
@@ -95,22 +95,24 @@ const SharedList = () => {
       </div>
       <div
         className={
-          "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-2"
+          "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-2 "
         }
       >
         {grouplist?.map((item) => (
           <div
             key={item.id}
             className={
-              "flex flex-col justify-center items-center p-2 shadow-lg border border-1 border-amber-600 rounded-md "
+              "w-full flex flex-col justify-center items-center p-2 shadow-lg border border-1 border-amber-600 rounded-md "
             }
           >
-            <p className=" ">{item.name}</p>
-            {/* <input
-            defaultValue={item.cost}
-
-            /> */}
-            <div>{item.cost}</div>
+            <div className="text-center  ">{item.name}</div>
+            <div className="w-full">
+            <input className="text-center w-full "
+            placeholder="قیمت (ریال)"
+             defaultValue={item.cost} />
+            </div>
+           
+            {/* <div>{item.cost}</div> */}
           </div>
         ))}
       </div>
