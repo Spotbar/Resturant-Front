@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Select from "react-select";
 import FactorNumber from "../../Interface/FactorNumbers";
+import Order from "../../Interface/Order";
 import Restaurant from "../../Interface/Restaurant";
 import SelectCustomStyles from "../../styles/SelectCustomStyles";
 import SharedList from "./SharedList";
@@ -60,26 +61,25 @@ const CreateOrder = () => {
     },
   ];
 
-  const [isSheard, setIsShared] = useState<boolean>(false);
-
-  const [factorNumber, setFactorNumber] = useState<FactorNumber>({
-    id: "",
-    label: "انتخاب کنید",
+  const [order, setOrder] = useState<Order>({
+    factorNumber: { id: "", label: "انتخاب کنید" },
+    restaurant: { id: "", label: "انتخاب کنید" },
+    ordertitle: "",
+    cost: 0,
+    isShared: false,
+    sharedList: [],
   });
-  const [restaurant, setRestaurant] = useState<Restaurant>({
-    id: "",
-    label: "انتخاب کنید",
-  });
+  const [orders, setOrders] = useState<Order[]>([]);
 
   const handleFactorSelectionChange = (option: FactorNumber | null) => {
     if (option) {
-      setFactorNumber(option);
+      setOrder({ ...order, factorNumber: option });
     }
   };
 
   const handleRestaurantSelectionChange = (option: Restaurant | null) => {
     if (option) {
-      setRestaurant(option);
+      setOrder({ ...order, restaurant: option });
     }
   };
 
@@ -94,7 +94,7 @@ const CreateOrder = () => {
             styles={SelectCustomStyles}
             maxMenuHeight={250}
             classNamePrefix="factorDropDown"
-            value={factorNumber}
+            value={order.factorNumber}
             onChange={handleFactorSelectionChange}
             options={FactorNumberList}
             isRtl={true}
@@ -116,7 +116,7 @@ const CreateOrder = () => {
             className="w-4/6"
             styles={SelectCustomStyles}
             classNamePrefix="restaurantDropDown"
-            value={restaurant}
+            value={order.restaurant}
             onChange={handleRestaurantSelectionChange}
             options={RestaurantList}
             isRtl={true}
@@ -140,13 +140,23 @@ const CreateOrder = () => {
       <div className="w-full flex flex-col sm:flex-row ">
         <div className="flex flex-row p-1 sm:w-1/2">
           <p className="w-2/6  px-5 py-1">سفارش</p>
-          <input className="w-4/6 border-2 rounded-md outline-amber-500 text-center" />
+          <input
+            className="w-4/6 border-2 rounded-md outline-amber-500 text-center"
+            value={order.ordertitle}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setOrder({ ...order, ordertitle: event.target.value });
+            }}
+          />
         </div>
         <div className="flex flex-row p-1 sm:w-1/2 ">
           <p className="w-2/6 px-5 py-1">مبلغ</p>
           <input
             className="w-4/6 border-2 rounded-md outline-amber-500 text-center"
             placeholder="ريال"
+            value={order.cost == 0 ? "" : order.cost}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setOrder({ ...order, cost: Number(event.target.value) });
+            }}
           />
         </div>
       </div>
@@ -158,9 +168,9 @@ const CreateOrder = () => {
             className="cursor-pointer accent-amber-600 focus:accent-amber-600"
             type="checkbox"
             name="check"
-            defaultChecked={isSheard} 
-            onChange={(e) => {
-              setIsShared(!isSheard);
+            defaultChecked={order.isShared}
+            onChange={(event) => {
+              setOrder({ ...order, isShared: !order.isShared });
             }}
           />
 
@@ -168,14 +178,29 @@ const CreateOrder = () => {
             سفارش اشتراکی
           </label>
         </div>
-        {isSheard ? <SharedList /> : <div></div>}
+        {order.isShared ? <SharedList /> : <div></div>}
       </div>
 
       {/* create */}
       <div className="w-full flex justify-end">
         <button
           className="w-2/6  bg-amber-600 p-2 rounded-md text-white text-lg"
-          onClick={() => {}}
+          onClick={() => {
+            if (orders?.length > 0) {
+              setOrders([...orders, order]);
+            } else {
+              setOrders([order]);
+            }console.log(orders)
+
+            setOrder({
+              factorNumber: { id: "", label: "انتخاب کنید" },
+              restaurant: { id: "", label: "انتخاب کنید" },
+              ordertitle: "",
+              cost: 0,
+              isShared: false,
+              sharedList: [],
+            });
+          }}
         >
           ثبت
         </button>

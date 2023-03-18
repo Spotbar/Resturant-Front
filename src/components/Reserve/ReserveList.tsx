@@ -58,7 +58,7 @@ function Row(props: { row: ReturnType<typeof createData> }) {
         <TableCell align="right">{row.calories}</TableCell>
         <TableCell align="right">{row.fat}</TableCell>
         <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+    
         <TableCell>
           <IconButton
             aria-label="expand row"
@@ -142,7 +142,7 @@ export default function ReserveList() {
             <TableCell align="right">رستوران</TableCell>
             <TableCell align="right">قیمت</TableCell>
             <TableCell align="right">فاکتور</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+           
             <TableCell />
 
           </TableRow>
