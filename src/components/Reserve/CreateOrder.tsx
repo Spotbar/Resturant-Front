@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Select from "react-select";
 import FactorNumber from "../../Interface/FactorNumbers";
 import Order from "../../Interface/Order";
@@ -61,6 +61,10 @@ const CreateOrder = () => {
     },
   ];
 
+  const SharedGroupListHandler = () => {
+    // do something with value in parent component, like save to state
+  };
+
   const [order, setOrder] = useState<Order>({
     factorNumber: { id: "", label: "انتخاب کنید" },
     restaurant: { id: "", label: "انتخاب کنید" },
@@ -82,6 +86,8 @@ const CreateOrder = () => {
       setOrder({ ...order, restaurant: option });
     }
   };
+
+  useEffect(() => {}, [orders]);
 
   return (
     <div className="flex flex-col border-2 border-dashed border-amber-600 rounded-md text-base p-5">
@@ -168,6 +174,7 @@ const CreateOrder = () => {
             className="cursor-pointer accent-amber-600 focus:accent-amber-600"
             type="checkbox"
             name="check"
+            checked={order.isShared}
             defaultChecked={order.isShared}
             onChange={(event) => {
               setOrder({ ...order, isShared: !order.isShared });
@@ -178,7 +185,11 @@ const CreateOrder = () => {
             سفارش اشتراکی
           </label>
         </div>
-        {order.isShared ? <SharedList /> : <div></div>}
+        {order.isShared ? (
+          <SharedList SharedGroupList={SharedGroupListHandler} />
+        ) : (
+          <div></div>
+        )}
       </div>
 
       {/* create */}
@@ -186,11 +197,12 @@ const CreateOrder = () => {
         <button
           className="w-2/6  bg-amber-600 p-2 rounded-md text-white text-lg"
           onClick={() => {
-            if (orders?.length > 0) {
-              setOrders([...orders, order]);
-            } else {
-              setOrders([order]);
-            }console.log(orders)
+            // if (orders?.length > 0) {
+            setOrders([...orders, order]);
+
+            // } else {
+            //   setOrders([order]);
+            // }console.log(orders)
 
             setOrder({
               factorNumber: { id: "", label: "انتخاب کنید" },

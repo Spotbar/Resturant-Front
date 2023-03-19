@@ -3,7 +3,10 @@ import Select from "react-select";
 import { useState } from "react";
 import Restaurant from "../../Interface/Restaurant";
 import SharedGroup from "../../Interface/SharedGroup";
-const SharedList = () => {
+const SharedList = (props:any) => {
+
+
+
   const [grouplist, setGrouplist] = useState<SharedGroup[]>([]);
   const employeeList: Restaurant[] = [
     {
@@ -86,6 +89,7 @@ const SharedList = () => {
                   ...grouplist,
                   { id: employee.label, name: employee.label, cost: "50000" },
                 ]);
+                props.SharedGroupList(grouplist)
               }
             }
           }}
