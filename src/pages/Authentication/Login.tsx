@@ -5,28 +5,65 @@ import * as Yup from "yup";
 import UserLogin from "../../Interface/UserLogin";
 import { useMutation } from "react-query";
 import { login } from "../../api";
+import validationHelpers from "../../utils/helpers/validation.helpers";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const initialValues: UserLogin = { username: "", password: "" };
+  const onSubmit = (user: UserLogin) => {
+    loginMutation.mutate(user);
+    console.log(user);
+    console.log("national Id :" + validationHelpers.nationalId(user.username));
+    // navigate("/Home");
+  };
 
-  // const initialValues: UserLogin = { username: "", password: "" };
+  function nationalIdYupCheck(this: any, message: string) {
+    return this.test("isValidId", message, (value: string) => {
+      const { path, createError } = this;
 
+      if (!value) {
+        return createError({ path, message: message ?? "* فیلد اجباری" });
+      } else {
+        if (!validationHelpers.nationalId(value)) {
+          return createError({
+            path,
+            message: message ?? "کد ملی نامعتبر است!",
+          });
+        }
+      }
+      return true;
+    });
+  }
+
+  // const validationSchema = Yup.object().shape(
+  //  username:Yup.string()
+  // )
+  Yup.addMethod(Yup.mixed, "nationalIdYupCheck", nationalIdYupCheck);
+  const validationSchema = Yup.object().shape({
+    // username: Yup.mixed().nationalIdYupCheck(),
+    password: Yup.string()
+      .required("کلمه عبور را وارد کنید")
+      .matches(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        "کلمه عبور باید حداقل 8 کارکتر و حداقل یک حرف و عدد باشد"
+        // "Must contain 8 characters, at least one letter and one number"
+      ),
+  });
   // Minimum 8 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character:
   //  "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
-
-  const [user, setUser] = useState<UserLogin>({
-    username: "",
-    password: "",
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
+    validateOnMount: true,
   });
 
-  const loginMutation = useMutation(() => {
-    return login(user).then((data) => {;
+  const loginMutation = useMutation((userData: UserLogin) => {
+    return login(userData).then((data) => {
       console.log(data);
       navigate("/Home");
     });
   });
-
-  
 
   return (
     <div className="w-screen h-screen  ">
@@ -36,39 +73,39 @@ const Login: React.FC = () => {
         <div className="absolute  w-full h-full flex justify-center items-center  z-1  ">
           <div className="w-full h-full md:w-3/4 md:h-3/4 flex justify-center items-center bg-login  md:border-4 md:border-white md:rounded-2xl shadow-2xl  bg-cover bg-right">
             {/* loginform */}
-            <div className="w-full mx-4 md:w-1/2 bg-white bg-opacity-90  py-8 px-5 flex flex-col justify-center items-center rounded-md gap-3">
+            <form
+              onSubmit={formik.handleSubmit}
+              className="w-full mx-4 md:w-1/2 bg-white bg-opacity-90  py-8 px-5 flex flex-col justify-center items-center rounded-md gap-3"
+            >
               <div className="font-bold text-center mb-2  text-lg text-slate-700">
                 اسپادانا
               </div>
               <input
                 className="w-full p-1 border-2 rounded-full outline-amber-500 text-center"
                 placeholder="نام کاربری"
-                value={user.username}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setUser({ ...user, username: event.target.value });
-                }}
+                {...formik.getFieldProps("username")}
+                name="username"
               />
+
               <input
                 className="w-full p-1 border-2 rounded-full outline-amber-500 text-center"
                 placeholder="کلمه عبور"
-                value={user.password}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setUser({ ...user, password: event.target.value });
-                }}
+                {...formik.getFieldProps("password")}
+                name="password"
               />
-
+        
               <button
+                type="submit"
                 className="w-full bg-amber-600 p-1 rounded-full text-white text-lg"
-                onClick={() => {
-                  console.log(user);
-                  // navigate("/Home");
-                  loginMutation.mutate();
-
-                }}
               >
                 ورود
               </button>
-            </div>
+              {formik.errors.password && formik.touched.password && (
+                <div className="w-full text-red-500 text-sm text-right">
+                  {formik.errors.password}
+                </div>
+              )}
+            </form>
           </div>
         </div>
       </div>
