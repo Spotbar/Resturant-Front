@@ -3,7 +3,7 @@ import headers from "../header";
 
 export default async function loginService(userName: string, password: string) {
   return http.post(
-    "/account/login",
+    "/Authenticate/authenticate",
     {
       UserName: userName,
       Password: password,
