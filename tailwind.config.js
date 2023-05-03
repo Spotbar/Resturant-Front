@@ -9,7 +9,7 @@ module.exports = {
         sans: ['iranyekan'],
       },
       backgroundImage: {
-        'login': "url('./assets/images/login.jpg')",
+        'login': "url('./assets/images/fastfood.jpg')",
       },
     },
   },

@@ -6,6 +6,7 @@ import PrivateRoute from "./privateRoute";
 import Home from "../pages/Home";
 import Bill from "../pages/Bill/Bills";
 import Reserve from "../pages/Activities/Reserve";
+import Profile from "../pages/Profile";
 
 export default function AspadanaRoutes() {
   return (
@@ -17,7 +18,7 @@ export default function AspadanaRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/Home" element={<Home />} />
       <Route path="/Bills" element={<Bill />} />
-      <Route path="/Bills" element={<Bill />} />
+      <Route path="/Profile" element={<Profile />} />
       <Route path="/Reserve" element={<Reserve/>}/>
     </Routes>
   );

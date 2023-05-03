@@ -85,7 +85,8 @@ const SharedList = (props:any) => {
               console.log(isDuplicate);
 
               if (!isDuplicate) {
-                setGrouplist((grouplist) => [
+            
+                setGrouplist(grouplist => [
                   ...grouplist,
                   { id: employee.label, name: employee.label, cost: "50000" },
                 ]);

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import DesktopNavbar from "../components/NavBar/DesktopNavbar";
-import MobileNavbar from "../components/NavBar/MobileNavbar";
-import Sidebar from "../components/Sidebar";
+import DesktopNavbar from "../NavBar/DesktopNavbar";
+import MobileNavbar from "../NavBar/MobileNavbar";
+import Sidebar from "../Sidebar";
 
 interface Props {
   children: React.ReactNode;

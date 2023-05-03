@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useQuery } from "react-query";
 import { getBills } from "../../api";
-import Main from "../Main";
+import Main from "../../components/Layout/Main";
 
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";

@@ -5,8 +5,11 @@ import Order from "../../Interface/Order";
 import Restaurant from "../../Interface/Restaurant";
 import SelectCustomStyles from "../../styles/SelectCustomStyles";
 import SharedList from "./SharedList";
-
-const CreateOrder = () => {
+import SharedGroup from "../../Interface/SharedGroup";
+interface OrderProps {
+  onOrderChange: (newData: Order) => void;
+}
+const CreateOrder: React.FC<OrderProps> = ({ onOrderChange }) => {
   const FactorNumberList: FactorNumber[] = [
     {
       id: "1",
@@ -61,9 +64,22 @@ const CreateOrder = () => {
     },
   ];
 
-  const SharedGroupListHandler = () => {
+  const [sharedItems, setSharedItems] = useState<SharedGroup[]>([]);
+
+  const SharedGroupListHandler = (sharedList: SharedGroup[]) => {
     // do something with value in parent component, like save to state
+    // setOrder({ ...order, sharedList: sharedList });
+
+    setSharedItems((prevSharedItems) => [...prevSharedItems, ...sharedList]);
+    // setGrouplist(grouplist => [
+    //   ...grouplist,
+    //   { id: employee.label, name: employee.label, cost: "50000" },
+    // ]);
   };
+
+  useEffect(() => {
+    setOrder({ ...order, sharedList: sharedItems });
+  }, [sharedItems]);
 
   const [order, setOrder] = useState<Order>({
     factorNumber: { id: "", label: "انتخاب کنید" },
@@ -143,7 +159,7 @@ const CreateOrder = () => {
 
       {/* order */}
 
-      <div className="w-full flex flex-col sm:flex-row ">
+      <div className="w-full flex flex-col sm:flex-row">
         <div className="flex flex-row p-1 sm:w-1/2">
           <p className="w-2/6  px-5 py-1">سفارش</p>
           <input
@@ -199,7 +215,7 @@ const CreateOrder = () => {
           onClick={() => {
             // if (orders?.length > 0) {
             setOrders([...orders, order]);
-
+            onOrderChange(order);
             // } else {
             //   setOrders([order]);
             // }console.log(orders)

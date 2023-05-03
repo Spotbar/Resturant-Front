@@ -1,4 +1,3 @@
-
 import * as React from "react";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
@@ -7,14 +6,14 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Collapse from "@mui/material/Collapse";
 //ICons
-import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
-import FastfoodOutlinedIcon from '@mui/icons-material/FastfoodOutlined';
-import ManageSearchOutlinedIcon from '@mui/icons-material/ManageSearchOutlined';
-import FoodBankOutlinedIcon from '@mui/icons-material/FoodBankOutlined';
-import ReceiptLongOutlinedIcon from '@mui/icons-material/ReceiptLongOutlined';
-import CreditScoreOutlinedIcon from '@mui/icons-material/CreditScoreOutlined';
-import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
+import FastfoodOutlinedIcon from "@mui/icons-material/FastfoodOutlined";
+import ManageSearchOutlinedIcon from "@mui/icons-material/ManageSearchOutlined";
+import FoodBankOutlinedIcon from "@mui/icons-material/FoodBankOutlined";
+import ReceiptLongOutlinedIcon from "@mui/icons-material/ReceiptLongOutlined";
+import CreditScoreOutlinedIcon from "@mui/icons-material/CreditScoreOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
@@ -52,13 +51,10 @@ const Sidebar = () => {
         //   </ListSubheader>
         // }
       >
-     
-
-        <ListItemButton 
-
-         onClick={() => {
-          navigate("/Reserve");
-        }}
+        <ListItemButton
+          onClick={() => {
+            navigate("/Reserve");
+          }}
         >
           <ListItemIcon>
             <FastfoodOutlinedIcon />
@@ -119,7 +115,11 @@ const Sidebar = () => {
           </List>
         </Collapse>
 
-        <ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            navigate("/Profile");
+          }}
+        >
           <ListItemIcon>
             <BadgeOutlinedIcon />
           </ListItemIcon>
@@ -127,7 +127,9 @@ const Sidebar = () => {
         </ListItemButton>
       </List>
 
-      <div className="text-lg font-bold text-amber-600 mb-4 mt-7">مدیریت سیستم</div>
+      <div className="text-lg font-bold text-amber-600 mb-4 mt-7">
+        مدیریت سیستم
+      </div>
 
       <List
         sx={{
@@ -192,7 +194,6 @@ const Sidebar = () => {
             </ListItemButton>
           </List>
         </Collapse>
-
       </List>
     </div>
   );

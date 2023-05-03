@@ -17,37 +17,60 @@ const Login: React.FC = () => {
     // navigate("/Home");
   };
 
-  function nationalIdYupCheck(this: any, message: string) {
-    return this.test("isValidId", message, (value: string) => {
-      const { path, createError } = this;
+  // function nationalIdYupCheck(this: any, message: string)  {
+  //   return this.test("isValidId", message, (value: string) => {
+  //     const { path, createError } = this;
 
-      if (!value) {
-        return createError({ path, message: message ?? "* فیلد اجباری" });
-      } else {
-        if (!validationHelpers.nationalId(value)) {
-          return createError({
-            path,
-            message: message ?? "کد ملی نامعتبر است!",
-          });
-        }
-      }
-      return true;
-    });
-  }
+  //     if (!value) {
+  //       return createError({ path, message: message ?? "* فیلد اجباری" });
+  //     } else {
+  //       if (!validationHelpers.nationalId(value)) {
+  //         return createError({
+  //           path,
+  //           message: message ?? "کد ملی نامعتبر است!",
+  //         });
+  //       }
+  //     }
+  //     return true;
+  //   });
+  // }
 
   // const validationSchema = Yup.object().shape(
   //  username:Yup.string()
   // )
-  Yup.addMethod(Yup.mixed, "nationalIdYupCheck", nationalIdYupCheck);
+  Yup.addMethod(Yup.string, "nationalIdYupCheck", function (message) {
+    return this.test(
+      "nationalIdYupCheck",
+      "کد ملی نامعتبر است",
+      function (value) {
+        // your custom validation logic here
+        const { path, createError } = this;
+
+        if (!value) {
+          return createError({ path, message: message ?? "* فیلد اجباری" });
+        } else {
+          if (!validationHelpers.nationalId(value)) {
+            return createError({
+              path,
+              message: message ?? "کد ملی نامعتبر است!",
+            });
+          }
+        }
+
+        return true;
+      }
+    );
+  });
+
+  // Yup.addMethod(Yup.mixed, "nationalIdYupCheck", nationalIdYupCheck);
   const validationSchema = Yup.object().shape({
-    // username: Yup.mixed().nationalIdYupCheck(),
-    password: Yup.string()
-      .required("کلمه عبور را وارد کنید")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-        "کلمه عبور باید حداقل 8 کارکتر و حداقل یک حرف و عدد باشد"
-        // "Must contain 8 characters, at least one letter and one number"
-      ),
+    // username: Yup.nationalIdYupCheck(),
+    password: Yup.string().required("کلمه عبور را وارد کنید"),
+    // .matches(
+    //   /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+    //   "کلمه عبور باید حداقل 8 کارکتر و حداقل یک حرف و عدد باشد"
+    //   // "Must contain 8 characters, at least one letter and one number"
+    // ),
   });
   // Minimum 8 characters at least 1 Uppercase Alphabet, 1 Lowercase Alphabet, 1 Number and 1 Special Character:
   //  "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$"
@@ -60,7 +83,9 @@ const Login: React.FC = () => {
 
   const loginMutation = useMutation((userData: UserLogin) => {
     return login(userData).then((data) => {
+
       console.log(data);
+
       navigate("/Home");
     });
   });
@@ -75,10 +100,10 @@ const Login: React.FC = () => {
             {/* loginform */}
             <form
               onSubmit={formik.handleSubmit}
-              className="w-full mx-4 md:w-1/2 bg-white bg-opacity-90  py-8 px-5 flex flex-col justify-center items-center rounded-md gap-3"
+              className="w-full mx-4 md:w-1/2 bg-white bg-opacity-60  py-8 px-5 flex flex-col justify-center items-center rounded-md gap-3"
             >
               <div className="font-bold text-center mb-2  text-lg text-slate-700">
-                اسپادانا
+                سامانه رزرواسیون پیشگامان
               </div>
               <input
                 className="w-full p-1 border-2 rounded-full outline-amber-500 text-center"
@@ -93,7 +118,7 @@ const Login: React.FC = () => {
                 {...formik.getFieldProps("password")}
                 name="password"
               />
-        
+
               <button
                 type="submit"
                 className="w-full bg-amber-600 p-1 rounded-full text-white text-lg"

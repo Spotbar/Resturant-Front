@@ -22,6 +22,17 @@ axios.interceptors.response.use(
   (response) => {
     // console.log(response.data.status);
     console.log(response);
+
+    // const tokenHeader = response.headers['set-cookie'];
+    
+    // if (tokenHeader) {
+    //   const tokenString = tokenHeader.join('');
+    //   const token = tokenString.split(";")[0].split("=")[1];
+    //   document.cookie = `X-Access-Token=${token}; HttpOnly`;
+    //   const cookies = document.cookie.split('; ');
+    //   console.log(cookies)
+
+    // }
     // if (response.data && response.data.status == 0 && response.data.data) {
     //     return response.data.data;
     // } else {
