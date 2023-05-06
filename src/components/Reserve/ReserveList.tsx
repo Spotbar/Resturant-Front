@@ -96,7 +96,7 @@ function Row(props: { _order: Order }) {
         </TableRow>
        
       ) : (
-        <div></div>
+        <></>
       )}
     </React.Fragment>
   );

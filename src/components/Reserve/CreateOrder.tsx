@@ -191,7 +191,7 @@ const CreateOrder: React.FC<OrderProps> = ({ onOrderChange }) => {
             type="checkbox"
             name="check"
             checked={order.isShared}
-            defaultChecked={order.isShared}
+            // defaultChecked={order.isShared}
             onChange={(event) => {
               setOrder({ ...order, isShared: !order.isShared });
             }}

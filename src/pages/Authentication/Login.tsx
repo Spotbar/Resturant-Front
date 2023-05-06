@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -8,6 +8,10 @@ import { login } from "../../api";
 import validationHelpers from "../../utils/helpers/validation.helpers";
 
 const Login: React.FC = () => {
+  useEffect(() => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("refresh");
+  }, []);
   const navigate = useNavigate();
   const initialValues: UserLogin = { username: "", password: "" };
   const onSubmit = (user: UserLogin) => {
@@ -83,10 +87,19 @@ const Login: React.FC = () => {
 
   const loginMutation = useMutation((userData: UserLogin) => {
     return login(userData).then((data) => {
+      if (
+        data &&
+        data.data &&
+        data.data.access_Token &&
+        data.data.refresh_Token
+      ) {
+        sessionStorage.setItem("token", data.data.access_Token);
+        sessionStorage.setItem("refresh", data.data.refresh_Token);
+        console.log(data.data.access_Token);
+        console.log(sessionStorage.getItem("token"));
 
-      console.log(data);
-
-      navigate("/Home");
+        navigate("/Home");
+      }
     });
   });
 

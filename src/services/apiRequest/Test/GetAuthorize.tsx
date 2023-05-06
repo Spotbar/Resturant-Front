@@ -9,7 +9,7 @@ try{
  
     {
       headers: await headers(),
-      withCredentials: true,
+      // withCredentials: true,
     }
   );
 
