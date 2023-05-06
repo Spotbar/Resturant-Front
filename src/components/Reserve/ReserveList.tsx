@@ -29,31 +29,37 @@ function Row(props: { _order: Order }) {
         <TableCell align="right">{_order.factorNumber.label}</TableCell>
 
         <TableCell>
-          {   _order.isShared  ?
-          <IconButton
-          aria-label="expand row"
-          size="small"
-      
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <KeyboardArrowUpIcon className="text-amber-600" /> : <KeyboardArrowDownIcon className="text-amber-600" />}
-        </IconButton>
-        :
-        <IconButton
-            aria-label="expand row"
-            size="small"
-        
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowDownIcon /> : <KeyboardArrowDownIcon/>}
-          </IconButton>
-          }
-          
+          {_order.isShared ? (
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? (
+                <div className="text-amber-600 text-sm">
+                  اشتراکی
+                  <KeyboardArrowUpIcon className="text-amber-600" />{" "}
+                </div>
+              ) : (
+                <div className="text-amber-600 text-sm">
+                  اشتراکی
+                  <KeyboardArrowDownIcon className="text-amber-600" />
+                </div>
+              )}
+            </IconButton>
+          ) : (
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowDownIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          )}
         </TableCell>
       </TableRow>
 
       {_order.sharedList.length > 0 ? (
-    
         <TableRow>
           <TableCell
             align="right"
@@ -62,9 +68,10 @@ function Row(props: { _order: Order }) {
           >
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
+                {/* <Typography variant="h6" gutterBottom component="div">
                   لیست اشتراکی
-                </Typography>
+                </Typography> */}
+                <p className="text-lg text-slate-500">لیست اشتراکی</p>
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <TableRow>
@@ -94,7 +101,6 @@ function Row(props: { _order: Order }) {
             </Collapse>
           </TableCell>
         </TableRow>
-       
       ) : (
         <></>
       )}
@@ -126,10 +132,18 @@ export default function ReserveList({ orders }: { orders: Order[] }) {
         <Table aria-label="collapsible table">
           <TableHead>
             <TableRow>
-              <TableCell align="right"><div className="font-bold">سفارش</div></TableCell>
-              <TableCell align="right" className="font-bold" ><div className="font-bold">رستوران</div></TableCell>
-              <TableCell align="right"><div className="font-bold">قیمت</div></TableCell>
-              <TableCell align="right"><div className="font-bold">فاکتور</div></TableCell>
+              <TableCell align="right">
+                <div className="font-bold">سفارش</div>
+              </TableCell>
+              <TableCell align="right" className="font-bold">
+                <div className="font-bold">رستوران</div>
+              </TableCell>
+              <TableCell align="right">
+                <div className="font-bold">قیمت</div>
+              </TableCell>
+              <TableCell align="right">
+                <div className="font-bold">فاکتور</div>
+              </TableCell>
 
               <TableCell />
             </TableRow>
