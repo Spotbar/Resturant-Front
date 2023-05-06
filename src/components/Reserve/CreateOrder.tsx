@@ -68,18 +68,13 @@ const CreateOrder: React.FC<OrderProps> = ({ onOrderChange }) => {
 
   const SharedGroupListHandler = (sharedList: SharedGroup[]) => {
     // do something with value in parent component, like save to state
-    // setOrder({ ...order, sharedList: sharedList });
 
-    setSharedItems((prevSharedItems) => [...prevSharedItems, ...sharedList]);
-    // setGrouplist(grouplist => [
-    //   ...grouplist,
-    //   { id: employee.label, name: employee.label, cost: "50000" },
-    // ]);
+    console.log(sharedList);
+   
+    setOrder({ ...order, sharedList: sharedList });
+
   };
 
-  useEffect(() => {
-    setOrder({ ...order, sharedList: sharedItems });
-  }, [sharedItems]);
 
   const [order, setOrder] = useState<Order>({
     factorNumber: { id: "", label: "انتخاب کنید" },
@@ -228,6 +223,9 @@ const CreateOrder: React.FC<OrderProps> = ({ onOrderChange }) => {
               isShared: false,
               sharedList: [],
             });
+
+            setSharedItems([])
+
           }}
         >
           ثبت

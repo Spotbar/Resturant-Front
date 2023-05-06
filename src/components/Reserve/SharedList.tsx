@@ -1,12 +1,9 @@
 import SelectCustomStyles from "../../styles/SelectCustomStyles";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Restaurant from "../../Interface/Restaurant";
 import SharedGroup from "../../Interface/SharedGroup";
-const SharedList = (props:any) => {
-
-
-
+const SharedList = (props: any) => {
   const [grouplist, setGrouplist] = useState<SharedGroup[]>([]);
   const employeeList: Restaurant[] = [
     {
@@ -47,6 +44,10 @@ const SharedList = (props:any) => {
     label: "انتخاب کنید",
   });
 
+  useEffect(() => {
+    props.SharedGroupList(grouplist);
+  }, [grouplist]);
+
   const handleEmployeeSelectionChange = (option: Restaurant | null) => {
     if (option) {
       setEmployee(option);
@@ -85,12 +86,10 @@ const SharedList = (props:any) => {
               console.log(isDuplicate);
 
               if (!isDuplicate) {
-            
-                setGrouplist(grouplist => [
+                setGrouplist((grouplist) => [
                   ...grouplist,
                   { id: employee.label, name: employee.label, cost: "50000" },
                 ]);
-                props.SharedGroupList(grouplist)
               }
             }
           }}
@@ -112,11 +111,13 @@ const SharedList = (props:any) => {
           >
             <div className="text-center  ">{item.name}</div>
             <div className="w-full">
-            <input className="text-center w-full "
-            placeholder="قیمت (ریال)"
-             defaultValue={item.cost} />
+              <input
+                className="text-center w-full "
+                placeholder="قیمت (ریال)"
+                defaultValue={item.cost}
+              />
             </div>
-           
+
             {/* <div>{item.cost}</div> */}
           </div>
         ))}
