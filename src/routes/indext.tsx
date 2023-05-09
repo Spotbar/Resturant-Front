@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Bill from "../pages/Bill/Bills";
 import Reserve from "../pages/Activities/Reserve";
 import Profile from "../pages/Profile";
+import Restaurant from "../pages/Admin/Restaurant/Restaurant";
 
 export default function AspadanaRoutes() {
   return (
@@ -19,7 +20,9 @@ export default function AspadanaRoutes() {
       <Route path="/Home" element={<Home />} />
       <Route path="/Bills" element={<Bill />} />
       <Route path="/Profile" element={<Profile />} />
-      <Route path="/Reserve" element={<Reserve/>}/>
+      <Route path="/Reserve" element={<Reserve />} />
+      <Route path="/Restaurant" element={<Restaurant />} />
+      <Route path="/Reserve" element={<Reserve />} />
     </Routes>
   );
 }

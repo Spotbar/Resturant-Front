@@ -147,7 +147,11 @@ const Sidebar = () => {
         //   </ListSubheader>
         // }
       >
-        <ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            navigate("/Restaurant");
+          }}
+        >
           <ListItemIcon>
             <FoodBankOutlinedIcon />
           </ListItemIcon>
