@@ -1,24 +1,22 @@
-import { useFormik } from "formik";
-import ICreateRestaurant from "../../../Interface/ICreateRestaurant";
-import Main from "../../../components/Layout/Main";
-import * as Yup from "yup";
 import { useMutation } from "react-query";
-import { AddRestaurant } from "../../../api";
+import ICreateRestaurant from "../../Interface/ICreateRestaurant";
+import { AddRestaurant } from "../../api";
+import Main from "../Layout/Main";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
-const Restaurant = () => {
+const Restaurant = (props: any) => {
+  const { title, btn, onSubmit } = props;
   const initialValues: ICreateRestaurant = {
     name: "",
     tell: 0,
     seller: "",
-    mobile: 0,
+    mobile:0,
     address: "",
   };
-  const onSubmit = (restaurant: ICreateRestaurant) => {
-    addRestaurantMutation.mutate(restaurant);
-    console.log(restaurant);
-
-    // // navigate("/Home");
-  };
+  // const onSubmit = (restaurant: ICreateRestaurant) => {
+  //   // // navigate("/Home");
+  // };
   const validationSchema = Yup.object().shape({
     name: Yup.string().required(" نام رستوران را وارد کنید"),
     tell: Yup.number().required("شماره تلفن رستوران را وارد کنید"),
@@ -26,26 +24,19 @@ const Restaurant = () => {
 
   const formik = useFormik({
     initialValues,
-    onSubmit,
+    onSubmit: (values) => {
+      onSubmit(values);
+    },
     validationSchema,
     validateOnMount: true,
   });
 
-  const addRestaurantMutation = useMutation(
-    async (restaurant: ICreateRestaurant) => {
-      const data = await AddRestaurant(restaurant);
-      if (data && data.data) {
-        // Navigate("/Home");
-      }
-    }
-  );
-
   return (
-    <Main>
-      <div className="text-amber-600 text-lg mb-6">ثبت رستوران جدید</div>
+    <div>
+      <div className="text-amber-600 text-lg mb-6"> {title}</div>
       <form onSubmit={formik.handleSubmit} className="w-full h-full text-sm">
         <div className="w-full h-full grid grid-cols-2 gap-4 sm:grid-cols-4">
-          <div className="mb-4  col-span-2">
+          <div className="mb-4 col-span-2">
             <label className="block text-gray-700 font-bold mb-2">
               نام رستوران
             </label>
@@ -127,12 +118,13 @@ const Restaurant = () => {
               className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto sm:px-14"
               type="submit"
             >
-              ثبت
+              {btn}
             </button>
           </div>
         </div>
       </form>
-    </Main>
+    </div>
   );
 };
+
 export default Restaurant;

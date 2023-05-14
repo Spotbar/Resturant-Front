@@ -149,7 +149,7 @@ const Sidebar = () => {
       >
         <ListItemButton
           onClick={() => {
-            navigate("/Restaurant");
+            navigate("/CreateRestaurant");
           }}
         >
           <ListItemIcon>

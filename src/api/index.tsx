@@ -6,6 +6,7 @@ import GetAuthorizeService from "../services/apiRequest/Test/GetAuthorize";
 
 import addRestaurantService from "../services/apiRequest/restaurant/addRestaurantService";
 import ICreateRestaurant from "../Interface/ICreateRestaurant";
+import getRestaurantsService from "../services/apiRequest/restaurant/getRestaurantsService";
 
 const login = async (userLogin: UserLogin) => {
   return await loginService(userLogin.username, userLogin.password);
@@ -19,8 +20,12 @@ const getAuthorize = async () => {
   return await GetAuthorizeService();
 };
 
+const getRestaurants = async () => {
+  return await getRestaurantsService();
+};
+
 const AddRestaurant = async (restaurant: ICreateRestaurant) => {
   return await addRestaurantService(restaurant);
 };
 
-export { login, getBills, getAuthorize, AddRestaurant };
+export { login, getBills, getAuthorize, getRestaurants, AddRestaurant };
