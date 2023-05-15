@@ -12,19 +12,19 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { createTheme, ThemeProvider } from "@mui/material";
-import IRestaurants from "../../Interface/IRestaurants";
+import IRestaurant from "../../Interface/IRestaurant";
 
 const RestaurantsList = (props: any) => {
   const { restaurants, onEdit, onDelete } = props;
 
   const [selectedRow, setSelectedRow] = useState({});
 
-  const handleEdit = (restaurant: IRestaurants) => {
+  const handleEdit = (restaurant: IRestaurant) => {
     setSelectedRow(restaurant.Id);
     onEdit(restaurant);
   };
 
-  const handleDelete = (restaurant: IRestaurants) => {
+  const handleDelete = (restaurant: IRestaurant) => {
     onDelete(restaurant);
   };
 
@@ -63,7 +63,7 @@ const RestaurantsList = (props: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {restaurants.map((restaurant: IRestaurants) => (
+            {restaurants.map((restaurant: IRestaurant) => (
               <TableRow
                 key={restaurant.Id}
                 selected={selectedRow === restaurant.Id}

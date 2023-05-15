@@ -1,4 +1,4 @@
-interface IRestaurants {
+interface IRestaurant {
   Id: string;
   Name: string;
   Tel: string;
@@ -6,4 +6,4 @@ interface IRestaurants {
   Mobile: string;
   Address: string;
 }
-export default IRestaurants;
+export default IRestaurant;
