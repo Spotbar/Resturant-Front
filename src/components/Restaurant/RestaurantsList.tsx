@@ -17,32 +17,6 @@ import IRestaurants from "../../Interface/IRestaurants";
 const RestaurantsList = (props: any) => {
   const { restaurants, onEdit, onDelete } = props;
 
-  const restaurantss = [
-    {
-      Id: "121b5fdf-7abd-4c4a-b121-2f2a2278eefe",
-      Name: "گلی خانم",
-      Tel: "0918",
-      OpratorName: "آقای",
-      Mobile: "09221112255",
-      Address: "شهرک",
-    },
-    {
-      Id: "221b5fdf-7abd-4c4a-b121-2f2a2278eefe",
-      Name: "آریایی",
-      Tel: "0912",
-      OpratorName: "آقای",
-      Mobile: "09221112255",
-      Address: "شهرک",
-    },
-    {
-      Id: "6a94c6b7-8f18-445a-b6d0-a41f54b84750",
-      Name: "سورنا",
-      Tel: "09221112255",
-      OpratorName: "خانم حسنی",
-      Mobile: "09221112255",
-      Address: "شهرک",
-    },
-  ];
   const [selectedRow, setSelectedRow] = useState({});
 
   const handleEdit = (restaurant: IRestaurants) => {
@@ -61,14 +35,14 @@ const RestaurantsList = (props: any) => {
       // ...
     },
   });
-  // if (restaurants.length === 0) {
-  //   return <div>Loading...</div>;
-  // }
+  if (restaurants.length === 0) {
+    return <div>Loading...</div>;
+  }
 
-  // if (!Array.isArray(restaurants)) {
-  //   console.log(restaurants);
-  //   return <div>Data is not an array</div>;
-  // }
+  if (!Array.isArray(restaurants)) {
+    console.log(restaurants);
+    return <div>Data is not an array</div>;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -89,7 +63,7 @@ const RestaurantsList = (props: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {restaurantss.map((restaurant: IRestaurants) => (
+            {restaurants.map((restaurant: IRestaurants) => (
               <TableRow
                 key={restaurant.Id}
                 selected={selectedRow === restaurant.Id}

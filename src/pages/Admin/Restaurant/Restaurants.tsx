@@ -15,24 +15,13 @@ const Restaurants = () => {
 
   const { isLoading, error, data } = useQuery("restaurants", getRestaurants, {
     onSuccess(data) {
-      const res=data.data.json()
-      console.log(res);
-      console.log(res.length);
-console.log(Array.isArray(data.data))
-      if (data && data.data && data.data.length > 0 && data.data[0].id) {
-  
-        setRestaurants(data.data);
-        console.log(restaurants);
-      }
+      console.log((data))
     },
   });
 
-
   useEffect(() => {
-    if (data && data.data && data.data.length > 0 ) {
-  
-      setRestaurants(data.data);
-      console.log(restaurants);
+    if (data && data.length > 0 ) {
+      setRestaurants(data);
     }
   }, [data]);
 
