@@ -158,7 +158,11 @@ const Sidebar = () => {
           <p className="w-full text-right">رستوران</p>
         </ListItemButton>
 
-        <ListItemButton>
+        <ListItemButton
+          onClick={() => {
+            navigate("/Factors");
+          }}
+        >
           <ListItemIcon>
             <ReceiptLongOutlinedIcon />
           </ListItemIcon>

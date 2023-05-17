@@ -10,6 +10,8 @@ import Profile from "../pages/Profile";
 import CreateRestaurant from "../pages/Admin/Restaurant/CreateRestaurant";
 import EditRestaurant from "../pages/Admin/Restaurant/EditRestaurant";
 import Restaurants from "../pages/Admin/Restaurant/Restaurants";
+import FactorTable from "../components/Factor/factorTable";
+import Factors from "../pages/Admin/Factor/Factors";
 
 export default function AspadanaRoutes() {
   return (
@@ -23,10 +25,12 @@ export default function AspadanaRoutes() {
       <Route path="/Bills" element={<Bill />} />
       <Route path="/Profile" element={<Profile />} />
       <Route path="/Reserve" element={<Reserve />} />
+
       <Route path="/CreateRestaurant" element={<CreateRestaurant />} />
       <Route path="/EditRestaurant/:id" element={<EditRestaurant />} />
       <Route path="/Restaurants" element={<Restaurants />} />
-      <Route path="/Reserve" element={<Reserve />} />
+
+      <Route path="/Factors" element={<Factors />} />
     </Routes>
   );
 }
