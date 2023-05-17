@@ -1,22 +1,23 @@
-import { useMutation } from "react-query";
-import ICreateRestaurant from "../../../Interface/ICreateRestaurant";
+import { useMutation, useQueryClient } from "react-query";
 import Main from "../../../components/Layout/Main";
 import Restaurant from "../../../components/Restaurant/Restaurant";
 import { AddRestaurant } from "../../../api";
+import IRestaurant from "../../../Interface/IRestaurant";
+import { useNavigate } from "react-router-dom";
 
 const CreateRestaurant = () => {
-  const addRestaurantMutation = useMutation(
-    async (restaurant: ICreateRestaurant) => {
-      const data = await AddRestaurant(restaurant);
-      if (data && data.data) {
-        // Navigate("/Home");
-      }
+  const navigate = useNavigate();
+  const client = useQueryClient();
+  const addRestaurantMutation = useMutation(async (restaurant: IRestaurant) => {
+    const data = await AddRestaurant(restaurant);
+    if (data && data.data) {
+      client.invalidateQueries("restaurants", { refetchInactive: true });
+      navigate("/Restaurants");
     }
-  );
+  });
 
-  const handleFormSubmit = async (restaurant: ICreateRestaurant) => {
+  const handleFormSubmit = (restaurant: IRestaurant) => {
     addRestaurantMutation.mutate(restaurant);
-    console.log(restaurant);
   };
 
   return (

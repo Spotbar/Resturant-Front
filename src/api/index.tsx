@@ -33,7 +33,7 @@ const editRestaurantById = async (restaurant: IRestaurant) => {
   return await editRestaurantByIdService(restaurant);
 };
 
-const AddRestaurant = async (restaurant: ICreateRestaurant) => {
+const AddRestaurant = async (restaurant: IRestaurant) => {
   return await addRestaurantService(restaurant);
 };
 

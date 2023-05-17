@@ -1,13 +1,20 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import ICreateRestaurant from "../../../Interface/ICreateRestaurant";
 import Main from "../../../components/Layout/Main";
 import Restaurant from "../../../components/Restaurant/Restaurant";
-import { AddRestaurant, editRestaurantById, getRestaurantById } from "../../../api";
+import {
+  AddRestaurant,
+  editRestaurantById,
+  getRestaurantById,
+} from "../../../api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import IRestaurant from "../../../Interface/IRestaurant";
+import { useNavigate } from "react-router-dom";
 
 const EditRestaurant = () => {
+  const navigate = useNavigate();
+  const client = useQueryClient();
   const { id } = useParams<{ id: string }>();
   const [Id, setId] = useState<string>("");
   const [restaurant, setRestaurant] = useState<IRestaurant>({
@@ -22,8 +29,6 @@ const EditRestaurant = () => {
   useEffect(() => {
     if (id) setId(id);
   }, [id]);
-
-
 
   const { isLoading, error, data } = useQuery(
     ["restaurantById", Id],
@@ -44,14 +49,16 @@ const EditRestaurant = () => {
     async (restaurant: IRestaurant) => {
       const data = await editRestaurantById(restaurant);
       if (data && data.data) {
-        // Navigate("/Home");
+        client.invalidateQueries("restaurants", { refetchInactive: true });
+        navigate("/Restaurants");
       }
     }
   );
 
-  const handleFormSubmit = async (restaurant: IRestaurant) => {
-    editRestaurantMutation.mutate(restaurant);
-    console.log(restaurant);
+  const handleFormSubmit = (resData: IRestaurant) => {
+    console.log(resData);
+    editRestaurantMutation.mutate(resData);
+   
   };
 
   if (isLoading) {

@@ -1,21 +1,19 @@
 import http from "../../httpService";
 import headers from "../../header";
-import ICreateRestaurant from "../../../Interface/ICreateRestaurant";
 
-export default async function addRestaurantService(
-  restaurant: ICreateRestaurant
-) {
+import IRestaurant from "../../../Interface/IRestaurant";
 
-  console.log(restaurant)
+export default async function addRestaurantService(restaurant: IRestaurant) {
+  console.log(restaurant);
   try {
     return http.post(
       "/Restaurant/AddNewRestaurant",
       {
-        name: restaurant?.name,
-        tel: restaurant?.tell,
-        opratorName: restaurant?.seller,
-        mobile: restaurant?.mobile,
-        address: restaurant?.address,
+        name: restaurant.Name,
+        tel: restaurant.Tel,
+        opratorName: restaurant.OpratorName,
+        mobile: restaurant.Mobile,
+        address: restaurant.Address,
       },
       {
         headers: await headers(),

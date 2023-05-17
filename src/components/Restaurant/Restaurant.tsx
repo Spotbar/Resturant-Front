@@ -5,13 +5,9 @@ import { useEffect, useState } from "react";
 
 const Restaurant = (props: any) => {
   const { title, btn, handleSubmit, data } = props;
-  const [restaurant, setRestaurant] = useState<IRestaurant>();
-
-
-
   const initialValues: IRestaurant = {
     Id: "",
-    Name:"",
+    Name: "",
     Tel: "",
     OpratorName: "",
     Mobile: "",
@@ -19,32 +15,48 @@ const Restaurant = (props: any) => {
   };
   useEffect(() => {
     if (data) {
-      formik.setFieldValue('Id', data.Id || '');
-      formik.setFieldValue('Name', data.Name || '');
-      formik.setFieldValue('Tel', data.Tel || '');
-      formik.setFieldValue('OpratorName', data.OpratorName || '');
-      formik.setFieldValue('Mobile', data.Mobile || '');
-      formik.setFieldValue('Address', data.Address || '');
+      formik.setFieldValue("Id", data.Id || "");
+      formik.setFieldValue("Name", data.Name || "");
+      formik.setFieldValue("Tel", data.Tel || "");
+      formik.setFieldValue("OpratorName", data.OpratorName || "");
+      formik.setFieldValue("Mobile", data.Mobile || "");
+      formik.setFieldValue("Address", data.Address || "");
     }
   }, [data]);
-  // const onSubmit = (restaurant: ICreateRestaurant) => {
-  //   // // navigate("/Home");
-  // };
+
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required(" نام رستوران را وارد کنید"),
-    tell: Yup.number().required("شماره تلفن رستوران را وارد کنید"),
+    Name: Yup.string().required(" نام رستوران را وارد کنید"),
+    Tel: Yup.string()
+      .matches(/^0[1-9]\d{9}$/, {
+        message: "شماره نامعتبر است!",
+        excludeEmptyString: false,
+      })
+      .required("* شماره تلفن را وارد کنید ")
+      .max(11, "شماره بیشتر از یازده رقم است!"),
+
+    Mobile: Yup.string()
+      .matches(
+        /(0|\+98)?([ ]|-|[()]){0,2}9[1|2|3|4]([ ]|-|[()]){0,2}(?:[0-9]([ ]|-|[()]){0,2}){8}/,
+        {
+          message: "شماره نامعتبر است!",
+          excludeEmptyString: false,
+        }
+      )
+      
+      .max(11, "شماره بیشتر از یازده رقم است!"),
+    Address: Yup.string()
+
+      .max(250, "تعداد کاراکترهای آدرس بیش از حد مجاز است"),
   });
 
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      handleSubmit(values);
+      handleSubmit(values); // Call the parent's form submission handler function
     },
     validationSchema,
     validateOnMount: true,
   });
-
-
 
   return (
     <div>
@@ -62,7 +74,6 @@ const Restaurant = (props: any) => {
               placeholder=""
               {...formik.getFieldProps("Name")}
               name="Name"
-              
             />
             {formik.errors.Name && formik.touched.Name && (
               <div className="w-full text-red-500 text-sm text-right">
