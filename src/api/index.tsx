@@ -8,6 +8,8 @@ import addRestaurantService from "../services/apiRequest/restaurant/addRestauran
 import ICreateRestaurant from "../Interface/ICreateRestaurant";
 import getRestaurantsService from "../services/apiRequest/restaurant/getRestaurantsService";
 import getRestaurantByIdService from "../services/apiRequest/restaurant/getRestaurantByIdService";
+import editRestaurantByIdService from "../services/apiRequest/restaurant/editRestaurantService";
+import IRestaurant from "../Interface/IRestaurant";
 
 const login = async (userLogin: UserLogin) => {
   return await loginService(userLogin.username, userLogin.password);
@@ -27,6 +29,9 @@ const getRestaurants = async () => {
 const getRestaurantById = async (id: string) => {
   return await getRestaurantByIdService(id);
 };
+const editRestaurantById = async (restaurant: IRestaurant) => {
+  return await editRestaurantByIdService(restaurant);
+};
 
 const AddRestaurant = async (restaurant: ICreateRestaurant) => {
   return await addRestaurantService(restaurant);
@@ -38,5 +43,6 @@ export {
   getAuthorize,
   getRestaurants,
   getRestaurantById,
+  editRestaurantById,
   AddRestaurant,
 };

@@ -24,7 +24,7 @@ export default function AspadanaRoutes() {
       <Route path="/Profile" element={<Profile />} />
       <Route path="/Reserve" element={<Reserve />} />
       <Route path="/CreateRestaurant" element={<CreateRestaurant />} />
-      <Route path="/EditRestaurant" element={<EditRestaurant />} />
+      <Route path="/EditRestaurant/:id" element={<EditRestaurant />} />
       <Route path="/Restaurants" element={<Restaurants />} />
       <Route path="/Reserve" element={<Reserve />} />
     </Routes>

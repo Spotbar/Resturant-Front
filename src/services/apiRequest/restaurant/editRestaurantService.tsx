@@ -1,12 +1,18 @@
 import http from "../../httpService";
 import headers from "../../header";
+import IRestaurant from "../../../Interface/IRestaurant";
 
-export default async function getRestaurantService() {
+export default async function editRestaurantService(restaurant: IRestaurant) {
   try {
-    return http.post(
-      "/Restaurant/AddNewRestaurant",
+    return http.put(
+      "/Restaurant/UpdateRestaurant",
       {
-        id: "string",
+        id: restaurant.Id,
+        name: restaurant.Name,
+        tel: restaurant.Tel,
+        opratorName: restaurant.OpratorName,
+        mobile: restaurant.Mobile,
+        address: restaurant.Address,
       },
       {
         headers: await headers(),

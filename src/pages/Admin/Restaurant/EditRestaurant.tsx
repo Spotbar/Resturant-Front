@@ -2,27 +2,28 @@ import { useMutation, useQuery } from "react-query";
 import ICreateRestaurant from "../../../Interface/ICreateRestaurant";
 import Main from "../../../components/Layout/Main";
 import Restaurant from "../../../components/Restaurant/Restaurant";
-import { AddRestaurant, getRestaurantById } from "../../../api";
+import { AddRestaurant, editRestaurantById, getRestaurantById } from "../../../api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import IRestaurant from "../../../Interface/IRestaurant";
 
 const EditRestaurant = () => {
   const { id } = useParams<{ id: string }>();
   const [Id, setId] = useState<string>("");
+  const [restaurant, setRestaurant] = useState<IRestaurant>({
+    Id: "",
+    Name: "",
+    Tel: "",
+    OpratorName: "",
+    Mobile: "",
+    Address: "",
+  });
 
   useEffect(() => {
     if (id) setId(id);
   }, [id]);
 
-  // const { isLoading, error, data } = useQuery(
-  //   "restaurantById",
-  //     getRestaurantById("id"),
-  //   {
-  //     onSuccess(data) {
-  //       console.log(data);
-  //     },
-  //   }
-  // );
+
 
   const { isLoading, error, data } = useQuery(
     ["restaurantById", Id],
@@ -36,17 +37,20 @@ const EditRestaurant = () => {
     }
   );
 
-  const addRestaurantMutation = useMutation(
-    async (restaurant: ICreateRestaurant) => {
-      const data = await AddRestaurant(restaurant);
+  useEffect(() => {
+    setRestaurant(data);
+  }, [data]);
+  const editRestaurantMutation = useMutation(
+    async (restaurant: IRestaurant) => {
+      const data = await editRestaurantById(restaurant);
       if (data && data.data) {
         // Navigate("/Home");
       }
     }
   );
 
-  const handleFormSubmit = async (restaurant: ICreateRestaurant) => {
-    addRestaurantMutation.mutate(restaurant);
+  const handleFormSubmit = async (restaurant: IRestaurant) => {
+    editRestaurantMutation.mutate(restaurant);
     console.log(restaurant);
   };
 
@@ -65,10 +69,10 @@ const EditRestaurant = () => {
   return (
     <Main>
       <Restaurant
-        data={data}
+        data={restaurant}
         btn={"ویرایش"}
         title={"ویرایش رستوران"}
-        onSubmit={handleFormSubmit}
+        handleSubmit={handleFormSubmit}
       />
     </Main>
   );

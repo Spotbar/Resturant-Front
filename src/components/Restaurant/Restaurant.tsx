@@ -1,19 +1,32 @@
-import { useMutation } from "react-query";
-import ICreateRestaurant from "../../Interface/ICreateRestaurant";
-import { AddRestaurant } from "../../api";
-import Main from "../Layout/Main";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import IRestaurant from "../../Interface/IRestaurant";
+import { useEffect, useState } from "react";
 
 const Restaurant = (props: any) => {
-  const { title, btn, onSubmit } = props;
-  const initialValues: ICreateRestaurant = {
-    name: "",
-    tell: 0,
-    seller: "",
-    mobile:0,
-    address: "",
+  const { title, btn, handleSubmit, data } = props;
+  const [restaurant, setRestaurant] = useState<IRestaurant>();
+
+
+
+  const initialValues: IRestaurant = {
+    Id: "",
+    Name:"",
+    Tel: "",
+    OpratorName: "",
+    Mobile: "",
+    Address: "",
   };
+  useEffect(() => {
+    if (data) {
+      formik.setFieldValue('Id', data.Id || '');
+      formik.setFieldValue('Name', data.Name || '');
+      formik.setFieldValue('Tel', data.Tel || '');
+      formik.setFieldValue('OpratorName', data.OpratorName || '');
+      formik.setFieldValue('Mobile', data.Mobile || '');
+      formik.setFieldValue('Address', data.Address || '');
+    }
+  }, [data]);
   // const onSubmit = (restaurant: ICreateRestaurant) => {
   //   // // navigate("/Home");
   // };
@@ -25,11 +38,13 @@ const Restaurant = (props: any) => {
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      onSubmit(values);
+      handleSubmit(values);
     },
     validationSchema,
     validateOnMount: true,
   });
+
+
 
   return (
     <div>
@@ -41,16 +56,17 @@ const Restaurant = (props: any) => {
               نام رستوران
             </label>
             <input
-              className="w-full rounded-md border outline-amber-500 py-2 px-3 leading-tight  "
-              id="name"
+              className="w-full rounded-md border outline-amber-500 py-2 px-3 leading-tight"
+              id="Name"
               type="text"
               placeholder=""
-              {...formik.getFieldProps("name")}
-              name="name"
+              {...formik.getFieldProps("Name")}
+              name="Name"
+              
             />
-            {formik.errors.name && formik.touched.name && (
+            {formik.errors.Name && formik.touched.Name && (
               <div className="w-full text-red-500 text-sm text-right">
-                {formik.errors.name}
+                {formik.errors.Name}
               </div>
             )}
           </div>
@@ -58,15 +74,15 @@ const Restaurant = (props: any) => {
             <label className="block text-gray-700 font-bold mb-2">تلفن</label>
             <input
               className="w-full rounded-md border outline-amber-500 py-2 px-3 leading-tight"
-              id="tell"
+              id="Tel"
               type="tel"
               // placeholder=""
-              {...formik.getFieldProps("tell")}
-              name="tell"
+              {...formik.getFieldProps("Tel")}
+              name="Tel"
             />
-            {formik.errors.tell && formik.touched.tell && (
+            {formik.errors.Tel && formik.touched.Tel && (
               <div className="w-full text-red-500 text-sm text-right">
-                {formik.errors.tell}
+                {formik.errors.Tel}
               </div>
             )}
           </div>
@@ -76,15 +92,15 @@ const Restaurant = (props: any) => {
             </label>
             <input
               className="w-full rounded-md border outline-amber-500 py-2 px-3 leading-tight"
-              id="seller"
+              id="OpratorName"
               type="text"
               // placeholder=""
-              {...formik.getFieldProps("seller")}
-              name="seller"
+              {...formik.getFieldProps("OpratorName")}
+              name="OpratorName"
             />
-            {formik.errors.seller && formik.touched.seller && (
+            {formik.errors.OpratorName && formik.touched.OpratorName && (
               <div className="w-full text-red-500 text-sm text-right">
-                {formik.errors.tell}
+                {formik.errors.OpratorName}
               </div>
             )}
           </div>
@@ -94,23 +110,33 @@ const Restaurant = (props: any) => {
             </label>
             <input
               className="w-full rounded-md border outline-amber-500 py-2 px-3 leading-tight"
-              id="mobile"
+              id="Mobile"
               type="text"
               // placeholder=""
-              {...formik.getFieldProps("mobile")}
-              name="mobile"
+              {...formik.getFieldProps("Mobile")}
+              name="Mobile"
             />
+            {formik.errors.Mobile && formik.touched.Mobile && (
+              <div className="w-full text-red-500 text-sm text-right">
+                {formik.errors.Mobile}
+              </div>
+            )}
           </div>
           <div className="mb-4 col-span-4 ">
             <label className="block text-gray-700 font-bold mb-2">آدرس</label>
             <textarea
               className="w-full rounded-md border outline-amber-500 py-2 px-3 leading-tight"
-              id="address"
+              id="Address"
               rows={3}
               // placeholder=""
-              {...formik.getFieldProps("address")}
-              name="address"
+              {...formik.getFieldProps("Address")}
+              name="Address"
             ></textarea>
+            {formik.errors.Address && formik.touched.Address && (
+              <div className="w-full text-red-500 text-sm text-right">
+                {formik.errors.Address}
+              </div>
+            )}
           </div>
 
           <div className="col-span-4 flex justify-end ">

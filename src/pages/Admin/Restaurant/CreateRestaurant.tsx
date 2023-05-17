@@ -25,7 +25,7 @@ const CreateRestaurant = () => {
         data={{}}
         btn={"ثبت"}
         title={"ثبت رستوران جدید"}
-        onSubmit={handleFormSubmit}
+        handleSubmit={handleFormSubmit}
       />
     </Main>
   );
