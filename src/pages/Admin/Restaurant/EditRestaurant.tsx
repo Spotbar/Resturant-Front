@@ -58,11 +58,15 @@ const EditRestaurant = () => {
   const handleFormSubmit = (resData: IRestaurant) => {
     console.log(resData);
     editRestaurantMutation.mutate(resData);
-   
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Main>   <Restaurant
+    data={{}}
+    btn={"ویرایش"}
+    title={"ویرایش رستوران"}
+    handleSubmit={{}}
+  /></Main>;
   }
 
   if (error) {

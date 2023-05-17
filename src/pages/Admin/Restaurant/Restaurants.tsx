@@ -14,7 +14,7 @@ const Restaurants = () => {
   const editHandler = (restaurant: IRestaurant) => {
     navigate(`/EditRestaurant/${restaurant.Id}`);
   };
- 
+
   const deleteHandler = () => {};
 
   const { isLoading, error, data } = useQuery("restaurants", getRestaurants, {
@@ -37,6 +37,15 @@ const Restaurants = () => {
         onEdit={editHandler}
         onDelete={deleteHandler}
       />
+
+      <div className="my-5">
+        <button className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto sm:px-14 text-lg"
+        onClick={()=>{
+          navigate('/CreateRestaurant')
+        }}>
+          رستوران جدید
+        </button>
+      </div>
     </Main>
   );
 };

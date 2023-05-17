@@ -149,20 +149,20 @@ const Sidebar = () => {
       >
         <ListItemButton
           onClick={() => {
-            navigate("/CreateRestaurant");
+            navigate("/Restaurants");
           }}
         >
           <ListItemIcon>
             <FoodBankOutlinedIcon />
           </ListItemIcon>
-          <p className="w-full text-right">ثبت رستوران</p>
+          <p className="w-full text-right">رستوران</p>
         </ListItemButton>
 
         <ListItemButton>
           <ListItemIcon>
             <ReceiptLongOutlinedIcon />
           </ListItemIcon>
-          <p className="w-full text-right">ثبت فاکتور</p>
+          <p className="w-full text-right">فاکتور</p>
         </ListItemButton>
 
         <ListItemButton>
