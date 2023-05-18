@@ -4,8 +4,40 @@ import FactorNumber from "../../Interface/FactorNumbers";
 import { useState, useMemo } from "react";
 
 const FactorTable = () => {
-  const PAGE_SIZE = 10;
+  const PAGE_SIZE = 5;
   const data: FactorNumber[] = [
+    {
+      id: "1",
+      label: "123",
+    },
+    {
+      id: "2",
+      label: "1234",
+    },
+    {
+      id: "3",
+      label: "52431",
+    },
+    {
+      id: "4",
+      label: "54548",
+    },
+    {
+      id: "1",
+      label: "123",
+    },
+    {
+      id: "2",
+      label: "1234",
+    },
+    {
+      id: "3",
+      label: "52431",
+    },
+    {
+      id: "4",
+      label: "54548",
+    },
     {
       id: "1",
       label: "123",
@@ -69,22 +101,22 @@ const FactorTable = () => {
         }}
       />
 
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 text-lg">
         <ReactPaginate
           previousLabel={
-            <span className="text-gray-500 hover:text-gray-700">previous</span>
+            <span className="text-gray-500 hover:text-gray-700 ">قبلی</span>
           }
           nextLabel={
-            <span className="text-gray-900 hover:text-gray-700">next</span>
+            <span className="text-gray-900 hover:text-gray-700">بعدی</span>
           }
           pageCount={pageCount}
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          pageLinkClassName="block p-2"
+          pageLinkClassName="block p-1 text-lg"
           containerClassName="flex justify-center items-center gap-2 mt-4"
-          pageClassName="rounded-lg bg-gray-200 px-2 text-gray-800 font-semibold hover:bg-gray-300"
-          activeClassName="bg-amber-600 text-white rounded-lg  px-2 font-semibold"
+          pageClassName="rounded-lg bg-gray-200 px-1 text-gray-800 font-semibold hover:bg-gray-300"
+          activeClassName="bg-amber-600 text-white rounded-lg  px-1 font-semibold"
           disabledClassName="opacity-50 cursor-not-allowed"
         />
       </div>
