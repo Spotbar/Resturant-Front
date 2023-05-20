@@ -10,16 +10,9 @@ const Factors: React.FC = () => {
   ];
 
   return (
-    // <Main>
-    //   <div>
-    //     <h1>Searchable Table with Pagination</h1>
-    //     <FactorTable />
-    //   </div>
-    // </Main>
     <Main>
     <div className="text-amber-600 text-lg mb-6"> لیست فاکتورها </div>
     <FactorTable
-
     />
 
     <div className="my-5">
