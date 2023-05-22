@@ -11,6 +11,9 @@ module.exports = {
       backgroundImage: {
         'login': "url('./assets/images/fastfood.jpg')",
       },
+      colors: {
+        primaryColor: '#d97706',
+      },
     },
   },
   plugins: [],

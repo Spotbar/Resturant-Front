@@ -23,6 +23,21 @@ export default function JalaliDatepicker() {
       typography: {
         fontFamily: "IRANSansMobile",
       },
+      components: {
+        MuiSvgIcon: {
+          styleOverrides: {
+            root: {
+              color: "#a8a29e", // Replace 'your-custom-color' with the desired color value
+              "&:hover": {
+                color: "#d97706", // Replace 'your-hover-color' with the hover color value
+              },
+              "&:active": {
+                color: "#d97706", // Replace 'your-active-color' with the active color value
+              },
+            },
+          },
+        },
+      },
     },
     coreFaIR, // x-date-pickers translations
     faIR // core translations
@@ -35,14 +50,16 @@ export default function JalaliDatepicker() {
           dateAdapter={AdapterDateFnsJalali}
           localeText={{
             cancelButtonLabel: "بازگشت",
-            clearButtonLabel: "None",
             okButtonLabel: "تایید",
-            todayButtonLabel: "Set today",
+            // todayButtonLabel: "Set today",
+            // clearButtonLabel: "None",
           }}
         >
           <DatePicker
             // label="Date Picker"
             defaultValue={new Date(2022, 1, 1)}
+  
+            
           />
         </LocalizationProvider>
       </div>
