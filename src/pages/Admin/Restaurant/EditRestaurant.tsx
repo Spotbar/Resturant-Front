@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import ICreateRestaurant from "../../../Interface/ICreateRestaurant";
 import Main from "../../../components/Layout/Main";
 import Restaurant from "../../../components/Restaurant/Restaurant";
 import {

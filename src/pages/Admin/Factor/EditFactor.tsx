@@ -1,0 +1,92 @@
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import Main from "../../../components/Layout/Main";
+import Restaurant from "../../../components/Restaurant/Restaurant";
+import { editFactorById, getFactorById, getRestaurantById } from "../../../api";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Factor from "../../../components/Factor/Factor";
+import IFactor from "../../../Interface/IFactor";
+
+const EditFactor = () => {
+  const navigate = useNavigate();
+  const client = useQueryClient();
+  const { id } = useParams<{ id: string }>();
+  const [Id, setId] = useState<string>("");
+  const [factor, setFactor] = useState<IFactor>({
+    Id: "",
+    FactorNumber: "",
+    FactorDate: "2023-05-22T09:55:00.020Z",
+    DeliveryCost: 0,
+    FactorAmount: 0,
+    IsClosed: false,
+    IsDeliveryByCompanyPaid: false,
+    RestaurantId: "",
+  });
+
+  useEffect(() => {
+    if (id) setId(id);
+  }, [id]);
+
+  const { isLoading, error, data } = useQuery(
+    ["factorById", Id],
+    () => getFactorById(Id),
+    {
+      enabled: !!Id,
+
+      onSuccess(data) {
+        console.log(data);
+      },
+    }
+  );
+
+  useEffect(() => {
+    setFactor(data);
+  }, [data]);
+  const editRestaurantMutation = useMutation(async (factor: IFactor) => {
+    const data = await editFactorById(factor);
+    if (data && data.data) {
+      client.invalidateQueries("factors", { refetchInactive: true });
+      navigate("/Factors");
+    }
+  });
+
+  const handleFormSubmit = (factorData: IFactor) => {
+    console.log(factorData);
+    editRestaurantMutation.mutate(factorData);
+  };
+
+  if (isLoading) {
+    return (
+      <Main>
+        {" "}
+        <Restaurant
+          data={{}}
+          btn={"ویرایش"}
+          title={"ویرایش رستوران"}
+          handleSubmit={{}}
+        />
+      </Main>
+    );
+  }
+
+  if (error) {
+    return <div>Error:</div>;
+  }
+
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <Main>
+      <Factor
+        factorData={factor}
+        btn={"ویرایش"}
+        title={"ویرایش فاکتور"}
+        handleSubmit={handleFormSubmit}
+      />
+    </Main>
+  );
+};
+export default EditFactor;
