@@ -1,3 +1,8 @@
+interface Restaurant {
+  Id: string;
+  Name: string;
+}
+
 interface IFactor {
   Id: string;
   FactorNumber: string;
@@ -6,6 +11,6 @@ interface IFactor {
   FactorAmount: number;
   IsClosed: boolean;
   IsDeliveryByCompanyPaid: boolean;
-  RestaurantId: string;
+  Restaurant: Restaurant;
 }
 export default IFactor;

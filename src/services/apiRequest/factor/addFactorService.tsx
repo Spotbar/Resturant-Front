@@ -15,7 +15,7 @@ export default async function addFactorService(factor: IFactor) {
         factorAmount: factor.FactorAmount,
         isClosed: factor.IsClosed,
         isDeliveryByCompanyPaid: factor.IsDeliveryByCompanyPaid,
-        restaurantId: factor.RestaurantId,
+        restaurantId: factor.Restaurant.Id,
       },
       {
         headers: await headers(),

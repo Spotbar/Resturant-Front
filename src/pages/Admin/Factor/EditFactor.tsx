@@ -21,7 +21,7 @@ const EditFactor = () => {
     FactorAmount: 0,
     IsClosed: false,
     IsDeliveryByCompanyPaid: false,
-    RestaurantId: "",
+    Restaurant: { Id: "", Name: "" },
   });
 
   useEffect(() => {

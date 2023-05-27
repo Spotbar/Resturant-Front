@@ -35,7 +35,7 @@ const Factor = (props: any) => {
     FactorAmount: 0,
     IsClosed: false,
     IsDeliveryByCompanyPaid: false,
-    RestaurantId: "",
+    Restaurant: { Id: "", Name: "" },
   };
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Factor = (props: any) => {
         "isDeliveryByCompanyPaid",
         factorData.isDeliveryByCompanyPaid || false
       );
-      formik.setFieldValue("RestaurantId", factorData.RestaurantId || "");
+      formik.setFieldValue("Restaurant", factorData.Restaurant || "");
     }
   }, [factorData]);
 
@@ -74,8 +74,8 @@ const Factor = (props: any) => {
     if (option) {
       // setOrder({ ...order, restaurant: option });
       formik.setFieldValue(
-        "RestaurantId",
-        factorData.RestaurantId || "475028d9-6ba3-4ddc-050c-08db56c002c1"
+        "Restaurant",
+        factorData.Restaurant || "475028d9-6ba3-4ddc-050c-08db56c002c1"
       );
     }
   };
@@ -141,9 +141,9 @@ const Factor = (props: any) => {
               })}
             />
 
-            {formik.errors.RestaurantId && formik.touched.RestaurantId && (
+            {formik.errors.Restaurant && formik.touched.Restaurant && (
               <div className="w-full text-red-500 text-sm text-right">
-                {formik.errors.RestaurantId}
+                {/* {formik.errors.Restaurant} */}
               </div>
             )}
           </div>

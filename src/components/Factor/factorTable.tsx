@@ -8,10 +8,10 @@ interface MaterialReactTableProps {
   // other props...
 }
 
-const FactorTable : React.FC<MaterialReactTableProps>= (props) => {
-  // const {factors} = props;
-  const factors: IFactor[] = props.factors as IFactor[];
-  
+const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
+  const { factors } = props;
+  // const factors: IFactor[] = props.factors as IFactor[];
+
   const PAGE_SIZE = 5;
   // const data: FactorNumber[] = [
   //   {
@@ -78,8 +78,8 @@ const FactorTable : React.FC<MaterialReactTableProps>= (props) => {
   const columns = useMemo<MRT_ColumnDef<IFactor>[]>(
     () => [
       {
-        accessorKey: "FactorAmount", //access nested data with dot notation
-        header: "FactorAmount",
+        accessorKey: "FactorNumber", //access nested data with dot notation
+        header: "شماره فاکتور",
         className: "rtl",
         style: {
           backgroundColor: "#f0f0f0",
@@ -87,8 +87,15 @@ const FactorTable : React.FC<MaterialReactTableProps>= (props) => {
         // getUniqueValues: undefined,
       },
       {
-        accessorKey: "DeliveryCost", //access nested data with dot notation
-        header: "DeliveryCost",
+        accessorKey: "Restaurant.Name", //access nested data with dot notation
+        header: "رستوران",
+        className: "rtl",
+  
+        // getUniqueValues: undefined,
+      },
+      {
+        accessorKey: "FactorAmount", //access nested data with dot notation
+        header: "مبلغ",
         className: "rtl",
         // getUniqueValues: undefined,
       },
@@ -101,10 +108,9 @@ const FactorTable : React.FC<MaterialReactTableProps>= (props) => {
     return <div>No data available</div>;
   }
 
-
   return (
     <div dir="rtl">
-      {factors  ? (
+      {factors ? (
         <div>
           <MaterialReactTable
             columns={columns}
