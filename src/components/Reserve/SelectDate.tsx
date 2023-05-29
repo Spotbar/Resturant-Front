@@ -5,7 +5,7 @@ const SelectDate = () => {
       <div className="">
         <span>تاریخ: </span>25 اسفند 1401
       </div>
-      <JalaliDatepicker />
+      {/* <JalaliDatepicker /> */}
     </div>
   );
 };

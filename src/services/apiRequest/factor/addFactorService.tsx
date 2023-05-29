@@ -9,13 +9,13 @@ export default async function addFactorService(factor: IFactor) {
       "/Factor/AddNewFactor",
       {
         id: "",
+        restaurantId: factor.Restaurant.Id,
         factorNumber: factor.FactorNumber,
         factorDate: factor.FactorDate,
         deliveryCost: factor.DeliveryCost,
         factorAmount: factor.FactorAmount,
         isClosed: factor.IsClosed,
         isDeliveryByCompanyPaid: factor.IsDeliveryByCompanyPaid,
-        restaurantId: factor.Restaurant.Id,
       },
       {
         headers: await headers(),

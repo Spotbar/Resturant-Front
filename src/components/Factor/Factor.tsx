@@ -9,10 +9,13 @@ import JalaliDatepicker from "../DatePickerX/JalaliDatepicker";
 import IRestaurant from "../../Interface/IRestaurant";
 import { useQuery } from "react-query";
 import { getRestaurants } from "../../api";
+import { PickerChangeHandlerContext } from "@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue.types";
+import { DateValidationError } from "@mui/x-date-pickers";
 
 const Factor = (props: any) => {
   const { title, btn, handleSubmit, factorData } = props;
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [selectRestaurant, setSelectRestaurant] = useState<Restaurant>();
 
   const { isLoading, error, data } = useQuery("restaurants", getRestaurants, {
     onSuccess(data) {},
@@ -21,16 +24,22 @@ const Factor = (props: any) => {
   useEffect(() => {
     if (data) {
       const options = data.map(function (row: IRestaurant) {
-        return { value: row.Id, label: row.Name };
+        return { id: row.Id, label: row.Name };
       });
       setRestaurants(options);
     }
   }, [data]);
 
+    useEffect(() => {
+    if (selectRestaurant) {
+      formik.setFieldValue("Restaurant", {Id:selectRestaurant.id, Name:selectRestaurant.label} );
+    }
+  }, [selectRestaurant]);
+
   const initialValues: IFactor = {
     Id: "",
     FactorNumber: "",
-    FactorDate: "2023-05-22T09:55:00.020Z",
+    FactorDate: "",
     DeliveryCost: 0,
     FactorAmount: 0,
     IsClosed: false,
@@ -53,12 +62,21 @@ const Factor = (props: any) => {
         "isDeliveryByCompanyPaid",
         factorData.isDeliveryByCompanyPaid || false
       );
-      formik.setFieldValue("Restaurant", factorData.Restaurant || "");
+      // formik.setFieldValue("Restaurant", factorData.Restaurant || "");
     }
   }, [factorData]);
 
   const validationSchema = Yup.object().shape({
+    // FactorDate: Yup.string().required("تاریخ را انتخاب کنید"),
     FactorNumber: Yup.string().required("شماره فاکتور را وارد کنید"),
+    DeliveryCost: Yup.number().required("هزینه پیک فاکتور را وارد کنید"),
+    FactorAmount: Yup.number().required("مبلغ فاکتور را وارد کنید"),
+    // IsClosed: Yup.boolean(),
+    // IsDeliveryByCompanyPaid: Yup.boolean(),
+    // Restaurant: Yup.object().shape({
+    //   Id: Yup.string().required("رستوران را انتخاب کنید").min(32, "رستوران را انتخاب کنید باید حداقل 0 کاراکتر باشد"),
+    //   Name: Yup.string(),
+    // }),
   });
 
   const formik = useFormik({
@@ -73,11 +91,18 @@ const Factor = (props: any) => {
   const handleRestaurantSelectionChange = (option: Restaurant | null) => {
     if (option) {
       // setOrder({ ...order, restaurant: option });
-      formik.setFieldValue(
-        "Restaurant",
-        factorData.Restaurant || "475028d9-6ba3-4ddc-050c-08db56c002c1"
-      );
+      formik.setFieldValue("Restaurant", factorData.Restaurant || "");
+      setSelectRestaurant(option)
     }
+  };
+
+  const handleDateChange = (
+    value: Date | null,
+    context: PickerChangeHandlerContext<DateValidationError>
+  ) => {
+    const formattedDate = value?.toISOString();
+    console.log(formattedDate);
+    formik.setFieldValue("FactorDate", formattedDate || "");
   };
 
   return (
@@ -87,7 +112,7 @@ const Factor = (props: any) => {
         <div className="mb-12 flex flex-row justify-start items-center gap-2">
           {/* <label className=" text-gray-700 font-bold mb-2">تاریخ</label> */}
 
-          <JalaliDatepicker />
+          <JalaliDatepicker onDateChange={handleDateChange} />
 
           {formik.errors.FactorDate && formik.touched.FactorDate && (
             <div className="w-full text-red-500 text-sm text-right">
@@ -124,7 +149,9 @@ const Factor = (props: any) => {
             <Select
               styles={SelectCustomStyles}
               classNamePrefix="restaurantDropDown"
-              // value={}
+              // value={formik.getFieldProps("Restaurant.Name").value}
+              value={selectRestaurant}
+              name="Restaurant.Id"
               onChange={handleRestaurantSelectionChange}
               options={restaurants}
               isRtl={true}
@@ -139,11 +166,12 @@ const Factor = (props: any) => {
                   primary50: "#d97706",
                 },
               })}
+
             />
 
-            {formik.errors.Restaurant && formik.touched.Restaurant && (
+            {formik.errors.Restaurant?.Id && formik.touched.Restaurant?.Id && (
               <div className="w-full text-red-500 text-sm text-right">
-                {/* {formik.errors.Restaurant} */}
+                {formik.errors.Restaurant?.Id}
               </div>
             )}
           </div>

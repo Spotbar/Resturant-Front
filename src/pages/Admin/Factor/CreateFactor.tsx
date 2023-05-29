@@ -17,6 +17,7 @@ const CreateFactor = () => {
   });
 
   const handleFormSubmit = (factor: IFactor) => {
+    console.log(factor);
     addFactorMutation.mutate(factor);
   };
 

@@ -6,13 +6,27 @@ import useTheme from "@mui/system/useTheme";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { faIR as coreFaIR } from "@mui/material/locale";
 import { faIR } from "@mui/x-date-pickers/locales";
+import { PickerChangeHandlerContext } from "@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue.types";
+import { DateValidationError } from "@mui/x-date-pickers";
 
-export default function JalaliDatepicker() {
+interface ChildComponentProps {
+  onDateChange: (value: Date | null, context: PickerChangeHandlerContext<DateValidationError>) => void;
+}
+
+export default function JalaliDatepicker(props: ChildComponentProps) {
+  const { onDateChange } = props;
+
   const existingTheme = useTheme();
   // const theme = React.useMemo(
   //   () => createTheme({ direction: "rtl" }, existingTheme),
   //   [existingTheme]
   // );
+
+  const handleDateChange = (value: Date | null, context: PickerChangeHandlerContext<DateValidationError>) => {
+
+    // Pass the value and context to the parent component
+    onDateChange(value, context);
+  };
 
   const theme = createTheme(
     {
@@ -58,8 +72,13 @@ export default function JalaliDatepicker() {
           <DatePicker
             // label="Date Picker"
             defaultValue={new Date(2022, 1, 1)}
-  
-            
+            onChange={handleDateChange} 
+            // onChange={(value, context) => {
+            //   // formik.setFieldValue('selectedDate', value);
+            //   // You can access the validation result from the context parameter if needed
+            //   console.log(value);
+            //   console.log(context);
+            // }}
           />
         </LocalizationProvider>
       </div>
