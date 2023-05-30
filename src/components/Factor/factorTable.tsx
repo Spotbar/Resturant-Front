@@ -1,8 +1,10 @@
 import MaterialReactTable, { type MRT_ColumnDef } from "material-react-table";
 import ReactPaginate from "react-paginate";
 import FactorNumber from "../../Interface/FactorNumbers";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import moment from "jalali-moment";
 import IFactor from "../../Interface/IFactor";
+import convertHelpers from "../../utils/helpers/convert.helpers";
 interface MaterialReactTableProps {
   factors: IFactor[];
   // other props...
@@ -12,57 +14,8 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
   const { factors } = props;
   // const factors: IFactor[] = props.factors as IFactor[];
 
-  const PAGE_SIZE = 5;
-  // const data: FactorNumber[] = [
-  //   {
-  //     id: "1",
-  //     label: "123",
-  //   },
-  //   {
-  //     id: "2",
-  //     label: "1234",
-  //   },
-  //   {
-  //     id: "3",
-  //     label: "52431",
-  //   },
-  //   {
-  //     id: "4",
-  //     label: "54548",
-  //   },
-  //   {
-  //     id: "1",
-  //     label: "123",
-  //   },
-  //   {
-  //     id: "2",
-  //     label: "1234",
-  //   },
-  //   {
-  //     id: "3",
-  //     label: "52431",
-  //   },
-  //   {
-  //     id: "4",
-  //     label: "54548",
-  //   },
-  //   {
-  //     id: "1",
-  //     label: "123",
-  //   },
-  //   {
-  //     id: "2",
-  //     label: "1234",
-  //   },
-  //   {
-  //     id: "3",
-  //     label: "52431",
-  //   },
-  //   {
-  //     id: "4",
-  //     label: "54548",
-  //   },
-  // ];
+  const PAGE_SIZE = 7;
+
   const [currentPage, setCurrentPage] = useState(0);
   const pageCount = Math.ceil(factors.length / PAGE_SIZE);
 
@@ -84,20 +37,57 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
         style: {
           backgroundColor: "#f0f0f0",
         },
-        // getUniqueValues: undefined,
       },
       {
         accessorKey: "Restaurant.Name", //access nested data with dot notation
         header: "رستوران",
         className: "rtl",
-  
-        // getUniqueValues: undefined,
+      },
+      {
+        accessorKey: "FactorDate",
+        header: "تاریخ",
+        className: "rtl",
+        Cell: ({ cell }) => {
+          return cell.getValue<string>() ? (
+            <span>{convertHelpers.jalali(cell.getValue<string>())}</span>
+          ) : (
+            <span></span>
+          );
+        },
       },
       {
         accessorKey: "FactorAmount", //access nested data with dot notation
         header: "مبلغ",
         className: "rtl",
-        // getUniqueValues: undefined,
+      },
+      {
+        accessorKey: "DeliveryCost", //access nested data with dot notation
+        header: "پیک",
+        className: "rtl",
+      },
+      {
+        accessorKey: "IsDeliveryByCompanyPaid", //access nested data with dot notation
+        header: "سهم شرکت",
+        className: "rtl",
+        Cell: ({ cell }) => {
+          return cell.getValue<boolean>() ? (
+            <input type="checkbox" checked disabled />
+          ) : (
+            <input type="checkbox" disabled />
+          );
+        },
+      },
+      {
+        accessorKey: "IsClosed", //access nested data with dot notation
+        header: "بسته",
+        className: "rtl",
+        Cell: ({ cell }) => {
+          return cell.getValue<boolean>() ? (
+            <input type="checkbox" checked  />
+          ) : (
+            <input type="checkbox" disabled />
+          );
+        },
       },
     ],
     []
@@ -120,6 +110,14 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
               align: "right",
               sx: {
                 direction: "rtl",
+                fontFamily: "IRANSansMobile",
+                // backgroundColor: "grey",
+              },
+            }}
+            muiTableHeadCellProps={{
+              sx: {
+                direction: "rtl",
+                fontFamily: "IRANSansMobile",
                 // backgroundColor: "grey",
               },
             }}
@@ -140,7 +138,7 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
               pageLinkClassName="block p-1 text-lg"
               containerClassName="flex justify-center items-center gap-2 mt-4"
               pageClassName="rounded-lg bg-gray-200 px-1 text-gray-800 font-semibold hover:bg-gray-300"
-              activeClassName="bg-amber-600 text-white rounded-lg  px-1 font-semibold"
+              activeClassName="bg-amber-500 text-white rounded-lg  px-1 font-semibold"
               disabledClassName="opacity-50 cursor-not-allowed"
             />
           </div>

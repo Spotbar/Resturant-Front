@@ -30,9 +30,12 @@ const Factor = (props: any) => {
     }
   }, [data]);
 
-    useEffect(() => {
+  useEffect(() => {
     if (selectRestaurant) {
-      formik.setFieldValue("Restaurant", {Id:selectRestaurant.id, Name:selectRestaurant.label} );
+      formik.setFieldValue("Restaurant", {
+        Id: selectRestaurant.id,
+        Name: selectRestaurant.label,
+      });
     }
   }, [selectRestaurant]);
 
@@ -57,7 +60,7 @@ const Factor = (props: any) => {
       );
       formik.setFieldValue("DeliveryCost", factorData.DeliveryCost || "");
       formik.setFieldValue("FactorAmount", factorData.FactorAmount || "");
-      formik.setFieldValue("isClosed", factorData.isClosed || false);
+      formik.setFieldValue("isClosed", factorData.isClosed);
       formik.setFieldValue(
         "isDeliveryByCompanyPaid",
         factorData.isDeliveryByCompanyPaid || false
@@ -92,7 +95,7 @@ const Factor = (props: any) => {
     if (option) {
       // setOrder({ ...order, restaurant: option });
       formik.setFieldValue("Restaurant", factorData.Restaurant || "");
-      setSelectRestaurant(option)
+      setSelectRestaurant(option);
     }
   };
 
@@ -166,7 +169,6 @@ const Factor = (props: any) => {
                   primary50: "#d97706",
                 },
               })}
-
             />
 
             {formik.errors.Restaurant?.Id && formik.touched.Restaurant?.Id && (
@@ -221,11 +223,14 @@ const Factor = (props: any) => {
               <input
                 className="cursor-pointer accent-amber-600 focus:accent-amber-600"
                 type="checkbox"
-                name="check"
-                // checked={order.isShared}
+                name="IsClosed"
+                checked={formik.getFieldProps("IsClosed").value}
                 // defaultChecked={order.isShared}
                 onChange={(event) => {
-                  // setOrder({ ...order, isShared: !order.isShared });
+                  formik.setFieldValue(
+                    "IsClosed",
+                    !formik.getFieldProps("IsClosed").value
+                  );
                 }}
               />
 
@@ -240,11 +245,15 @@ const Factor = (props: any) => {
               <input
                 className="cursor-pointer accent-amber-600 focus:accent-amber-600"
                 type="checkbox"
-                name="check"
-                // checked={order.isShared}
+                name="IsDeliveryByCompanyPaid"
+                checked={formik.getFieldProps("IsDeliveryByCompanyPaid").value}
                 // defaultChecked={order.isShared}
                 onChange={(event) => {
-                  // setOrder({ ...order, isShared: !order.isShared });
+
+                  formik.setFieldValue(
+                    "IsDeliveryByCompanyPaid",
+                    !formik.getFieldProps("IsDeliveryByCompanyPaid").value
+                  );
                 }}
               />
 
