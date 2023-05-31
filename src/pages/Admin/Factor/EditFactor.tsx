@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Main from "../../../components/Layout/Main";
 import Restaurant from "../../../components/Restaurant/Restaurant";
-import { editFactorById, getFactorById, getRestaurantById } from "../../../api";
+import { editFactorById, getFactorById } from "../../../api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -43,6 +43,8 @@ const EditFactor = () => {
   useEffect(() => {
     setFactor(data);
   }, [data]);
+
+
   const editRestaurantMutation = useMutation(async (factor: IFactor) => {
     const data = await editFactorById(factor);
     if (data && data.data) {
@@ -60,8 +62,8 @@ const EditFactor = () => {
     return (
       <Main>
         {" "}
-        <Restaurant
-          data={{}}
+        <Factor
+          data={factor}
           btn={"ویرایش"}
           title={"ویرایش رستوران"}
           handleSubmit={{}}

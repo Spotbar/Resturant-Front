@@ -5,6 +5,8 @@ import { useState, useMemo, useEffect } from "react";
 import moment from "jalali-moment";
 import IFactor from "../../Interface/IFactor";
 import convertHelpers from "../../utils/helpers/convert.helpers";
+import { useNavigate } from "react-router-dom";
+
 interface MaterialReactTableProps {
   factors: IFactor[];
   // other props...
@@ -12,6 +14,7 @@ interface MaterialReactTableProps {
 
 const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
   const { factors } = props;
+  const navigate = useNavigate();
   // const factors: IFactor[] = props.factors as IFactor[];
 
   const PAGE_SIZE = 7;
@@ -34,8 +37,23 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
         accessorKey: "FactorNumber", //access nested data with dot notation
         header: "شماره فاکتور",
         className: "rtl",
-        style: {
-          backgroundColor: "#f0f0f0",
+        // style: {
+        //   backgroundColor: "#f0f0f0",
+        //   cursor: "pointer",
+        // },
+        Cell: ({ cell }) => {
+          const factorId = cell.row.original.Id;
+
+          return (
+            <span
+            className="text-amber-900 underline cursor-pointer"
+              onClick={() => {
+                navigate(`/EditFactor/${factorId}`);
+              }}
+            >
+              {cell.getValue<string>()}
+            </span>
+          );
         },
       },
       {
@@ -71,7 +89,11 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
         className: "rtl",
         Cell: ({ cell }) => {
           return cell.getValue<boolean>() ? (
-            <input type="checkbox" checked disabled />
+            <input
+              className="cursor-pointer accent-amber-800 focus:accent-amber-800"
+              type="checkbox"
+              checked
+            />
           ) : (
             <input type="checkbox" disabled />
           );
@@ -83,7 +105,11 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
         className: "rtl",
         Cell: ({ cell }) => {
           return cell.getValue<boolean>() ? (
-            <input type="checkbox" checked  />
+            <input
+              className="cursor-pointer accent-amber-800 focus:accent-amber-800"
+              type="checkbox"
+              checked
+            />
           ) : (
             <input type="checkbox" disabled />
           );

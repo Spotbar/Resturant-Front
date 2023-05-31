@@ -1,15 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import Main from "../../../components/Layout/Main";
 import Restaurant from "../../../components/Restaurant/Restaurant";
-import {
-  AddRestaurant,
-  editRestaurantById,
-  getRestaurantById,
-} from "../../../api";
+import {AddRestaurant,editRestaurantById,getRestaurantById,} from "../../../api";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import IRestaurant from "../../../Interface/IRestaurant";
 import { useNavigate } from "react-router-dom";
+import IRestaurant from "../../../Interface/IRestaurant";
 
 const EditRestaurant = () => {
   const navigate = useNavigate();
@@ -60,12 +56,17 @@ const EditRestaurant = () => {
   };
 
   if (isLoading) {
-    return <Main>   <Restaurant
-    data={{}}
-    btn={"ویرایش"}
-    title={"ویرایش رستوران"}
-    handleSubmit={{}}
-  /></Main>;
+    return (
+      <Main>
+        {" "}
+        <Restaurant
+          data={{}}
+          btn={"ویرایش"}
+          title={"ویرایش رستوران"}
+          handleSubmit={{}}
+        />
+      </Main>
+    );
   }
 
   if (error) {

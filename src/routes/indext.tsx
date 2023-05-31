@@ -34,7 +34,7 @@ export default function AspadanaRoutes() {
 
       <Route path="/Factors" element={<Factors />} />
       <Route path="/CreateFactor" element={<CreateFactor />} />
-      <Route path="/EditFactor" element={<EditFactor />} />
+      <Route path="/EditFactor/:id" element={<EditFactor />} />
     </Routes>
   );
 }

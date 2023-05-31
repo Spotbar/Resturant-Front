@@ -4,7 +4,7 @@ import headers from "../../header";
 export default async function getFactorByIdService(id: string) {
   try {
     const response = http.get(
-      `/Factor/Get_Id?restaurantId=${id}`,
+      `/Factor/Get_Id?factorId=${id}`,
       // {
       //   id: id,
       // },
