@@ -6,6 +6,16 @@ import { useNavigate } from "react-router-dom";
 import Factor from "../../../components/Factor/Factor";
 
 const CreateFactor = () => {
+  const initialValues: IFactor = {
+    Id: "",
+    FactorNumber: "",
+    FactorDate: "",
+    DeliveryCost: 0,
+    FactorAmount: 0,
+    IsClosed: false,
+    IsDeliveryByCompanyPaid: false,
+    Restaurant: { Id: "", Name: "" },
+  };
   const navigate = useNavigate();
   const client = useQueryClient();
   const addFactorMutation = useMutation(async (factor: IFactor) => {
@@ -24,7 +34,7 @@ const CreateFactor = () => {
   return (
     <Main>
       <Factor
-        factorData={{}}
+        factorData={initialValues}
         btn={"ثبت"}
         title={"ثبت فاکتور جدید"}
         handleSubmit={handleFormSubmit}

@@ -10,20 +10,19 @@ import { PickerChangeHandlerContext } from "@mui/x-date-pickers/internals/hooks/
 import { DateValidationError } from "@mui/x-date-pickers";
 
 interface ChildComponentProps {
-  onDateChange: (value: Date | null, context: PickerChangeHandlerContext<DateValidationError>) => void;
+  onDateChange: (
+    value: Date | null,
+    context: PickerChangeHandlerContext<DateValidationError>
+  ) => void;
+  selectedDate: string;
 }
 
 export default function JalaliDatepicker(props: ChildComponentProps) {
-  const { onDateChange } = props;
-
-  const existingTheme = useTheme();
-  // const theme = React.useMemo(
-  //   () => createTheme({ direction: "rtl" }, existingTheme),
-  //   [existingTheme]
-  // );
-
-  const handleDateChange = (value: Date | null, context: PickerChangeHandlerContext<DateValidationError>) => {
-
+  const { onDateChange, selectedDate } = props;
+  const handleDateChange = (
+    value: Date | null,
+    context: PickerChangeHandlerContext<DateValidationError>
+  ) => {
     // Pass the value and context to the parent component
     onDateChange(value, context);
   };
@@ -71,8 +70,9 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
         >
           <DatePicker
             // label="Date Picker"
-            defaultValue={new Date(2022, 1, 1)}
-            onChange={handleDateChange} 
+            // defaultValue={new Date(2022, 1, 1)}
+            defaultValue={new Date(selectedDate)}
+            onChange={handleDateChange}
             // onChange={(value, context) => {
             //   // formik.setFieldValue('selectedDate', value);
             //   // You can access the validation result from the context parameter if needed

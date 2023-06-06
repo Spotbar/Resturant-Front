@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import IFactor from "../../Interface/IFactor";
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import SelectCustomStyles from "../../styles/SelectCustomStyles";
 import Select from "react-select";
 import Restaurant from "../../Interface/Restaurant";
@@ -12,10 +12,27 @@ import { getRestaurants } from "../../api";
 import { PickerChangeHandlerContext } from "@mui/x-date-pickers/internals/hooks/usePicker/usePickerValue.types";
 import { DateValidationError } from "@mui/x-date-pickers";
 
-const Factor = (props: any) => {
+interface FactorComponentProps {
+  title: string;
+  btn: string;
+  factorData: IFactor;
+  handleSubmit: (factor: IFactor) => void;
+}
+
+const Factor = (props: FactorComponentProps) => {
   const { title, btn, handleSubmit, factorData } = props;
+
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
-  const [selectRestaurant, setSelectRestaurant] = useState<Restaurant>();
+
+  const [selectRestaurant, setSelectRestaurant] = useState<Restaurant>({
+    id: factorData.Restaurant.Id,
+    label: factorData.Restaurant.Name,
+  });
+
+  useEffect(() => {
+    console.log(factorData);
+  }, []);
+
 
   const { isLoading, error, data } = useQuery("restaurants", getRestaurants, {
     onSuccess(data) {},
@@ -30,14 +47,6 @@ const Factor = (props: any) => {
     }
   }, [data]);
 
-  useEffect(() => {
-    if (selectRestaurant) {
-      formik.setFieldValue("Restaurant", {
-        Id: selectRestaurant.id,
-        Name: selectRestaurant.label,
-      });
-    }
-  }, [selectRestaurant]);
 
   const initialValues: IFactor = {
     Id: "",
@@ -52,20 +61,20 @@ const Factor = (props: any) => {
 
   useEffect(() => {
     if (factorData) {
-      formik.setFieldValue("Id", factorData.Id || "");
-      formik.setFieldValue("FactorNumber", factorData.FactorNumber || "");
+      formik.setFieldValue("Id", factorData.Id);
+      formik.setFieldValue("FactorNumber", factorData.FactorNumber);
+      formik.setFieldValue("FactorDate", factorData.FactorDate);
+      formik.setFieldValue("DeliveryCost", factorData.DeliveryCost);
+      formik.setFieldValue("FactorAmount", factorData.FactorAmount);
+      formik.setFieldValue("IsClosed", factorData.IsClosed);
       formik.setFieldValue(
-        "FactorDate",
-        factorData.FactorDate || "2023-05-27T07:30:14.150Z"
+        "IsDeliveryByCompanyPaid",
+        factorData.IsDeliveryByCompanyPaid
       );
-      formik.setFieldValue("DeliveryCost", factorData.DeliveryCost || "");
-      formik.setFieldValue("FactorAmount", factorData.FactorAmount || "");
-      formik.setFieldValue("isClosed", factorData.isClosed);
-      formik.setFieldValue(
-        "isDeliveryByCompanyPaid",
-        factorData.isDeliveryByCompanyPaid || false
-      );
-      // formik.setFieldValue("Restaurant", factorData.Restaurant || "");
+      formik.setFieldValue("Restaurant", {
+        Id: selectRestaurant.id,
+        Name: selectRestaurant.label,
+      });
     }
   }, [factorData]);
 
@@ -93,8 +102,12 @@ const Factor = (props: any) => {
 
   const handleRestaurantSelectionChange = (option: Restaurant | null) => {
     if (option) {
-      // setOrder({ ...order, restaurant: option });
-      formik.setFieldValue("Restaurant", factorData.Restaurant || "");
+
+      formik.setFieldValue("Restaurant", {
+        Id: option.id,
+        Name: option.label,
+      });
+
       setSelectRestaurant(option);
     }
   };
@@ -115,7 +128,10 @@ const Factor = (props: any) => {
         <div className="mb-12 flex flex-row justify-start items-center gap-2">
           {/* <label className=" text-gray-700 font-bold mb-2">تاریخ</label> */}
 
-          <JalaliDatepicker onDateChange={handleDateChange} />
+          <JalaliDatepicker
+            selectedDate={factorData.FactorDate}
+            onDateChange={handleDateChange}
+          />
 
           {formik.errors.FactorDate && formik.touched.FactorDate && (
             <div className="w-full text-red-500 text-sm text-right">
@@ -249,7 +265,6 @@ const Factor = (props: any) => {
                 checked={formik.getFieldProps("IsDeliveryByCompanyPaid").value}
                 // defaultChecked={order.isShared}
                 onChange={(event) => {
-
                   formik.setFieldValue(
                     "IsDeliveryByCompanyPaid",
                     !formik.getFieldProps("IsDeliveryByCompanyPaid").value

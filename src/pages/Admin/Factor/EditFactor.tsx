@@ -16,7 +16,7 @@ const EditFactor = () => {
   const [factor, setFactor] = useState<IFactor>({
     Id: "",
     FactorNumber: "",
-    FactorDate: "2023-05-22T09:55:00.020Z",
+    FactorDate: "",
     DeliveryCost: 0,
     FactorAmount: 0,
     IsClosed: false,
@@ -36,16 +36,20 @@ const EditFactor = () => {
 
       onSuccess(data) {
         console.log(data);
+        if (data) {
+          setFactor(data)
+        }
       },
     }
   );
 
-  useEffect(() => {
-    setFactor(data);
-  }, [data]);
 
+  useEffect(() => {
+    console.log(factor);
+  }, [factor]);
 
   const editRestaurantMutation = useMutation(async (factor: IFactor) => {
+    console.log('')
     const data = await editFactorById(factor);
     if (data && data.data) {
       client.invalidateQueries("factors", { refetchInactive: true });
@@ -63,10 +67,10 @@ const EditFactor = () => {
       <Main>
         {" "}
         <Factor
-          data={factor}
+          factorData={factor}
           btn={"ویرایش"}
           title={"ویرایش رستوران"}
-          handleSubmit={{}}
+          handleSubmit={() => {}}
         />
       </Main>
     );

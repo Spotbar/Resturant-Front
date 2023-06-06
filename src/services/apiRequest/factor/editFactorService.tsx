@@ -7,7 +7,7 @@ export default async function editFactorService(factor: IFactor) {
     return http.put(
       "/Factor/UpdateFactor",
       {
-        id: "",
+        id: factor.Id,
         factorNumber: factor.FactorNumber,
         factorDate: factor.FactorDate,
         deliveryCost: factor.DeliveryCost,
