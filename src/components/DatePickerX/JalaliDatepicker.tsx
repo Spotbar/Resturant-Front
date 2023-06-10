@@ -40,13 +40,30 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
         MuiSvgIcon: {
           styleOverrides: {
             root: {
-              color: "#a8a29e", // Replace 'your-custom-color' with the desired color value
+              color: "#a8a29e", 
               "&:hover": {
-                color: "#d97706", // Replace 'your-hover-color' with the hover color value
+                color: "#d97706", 
               },
               "&:active": {
-                color: "#d97706", // Replace 'your-active-color' with the active color value
+                color: "#d97706", 
               },
+            },
+          },
+        },
+        MuiTextField: {
+          styleOverrides: {
+            root: {
+              // height: "70px", 
+              display: "block",
+       
+           
+            },
+          },
+        },
+        MuiInputBase: {
+          styleOverrides: {
+            input: {
+              width: "100%", // Set the width to 100%
             },
           },
         },
@@ -58,7 +75,7 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <div dir="rtl">
+      <div dir="rtl" >
         <LocalizationProvider
           dateAdapter={AdapterDateFnsJalali}
           localeText={{
@@ -79,6 +96,7 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
             //   console.log(value);
             //   console.log(context);
             // }}
+            slotProps={{ textField: { size: 'small' } }}
           />
         </LocalizationProvider>
       </div>

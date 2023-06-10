@@ -13,7 +13,7 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { createTheme, ThemeProvider } from "@mui/material";
-import Order from "../../Interface/Order";
+import Order from "../../Interface/IOrder";
 
 function Row(props: { _order: Order }) {
   const [open, setOpen] = React.useState(false);
@@ -22,14 +22,14 @@ function Row(props: { _order: Order }) {
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
         <TableCell align="right" component="th" scope="row">
-          {_order.ordertitle}
+          {_order.Name}
         </TableCell>
-        <TableCell align="right">{_order.restaurant.label}</TableCell>
-        <TableCell align="right">{_order.cost}</TableCell>
-        <TableCell align="right">{_order.factorNumber.label}</TableCell>
+        <TableCell align="right">{_order.Restaurant.Name}</TableCell>
+        <TableCell align="right">{_order.Cost}</TableCell>
+      
 
         <TableCell>
-          {_order.isShared ? (
+          {_order.IsShared ? (
             <IconButton
               aria-label="expand row"
               size="small"
@@ -59,7 +59,7 @@ function Row(props: { _order: Order }) {
         </TableCell>
       </TableRow>
 
-      {_order.sharedList.length > 0 ? (
+      {_order.UserOrders.length > 0 ? (
         <TableRow>
           <TableCell
             align="right"
@@ -82,13 +82,13 @@ function Row(props: { _order: Order }) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {_order.sharedList &&
-                      _order.sharedList.map((item) => (
-                        <TableRow key={item.id}>
+                    {_order.UserOrders &&
+                      _order.UserOrders.map((item) => (
+                        <TableRow key={item.UserId}>
                           <TableCell align="right" component="th" scope="row">
-                            {item.name}
+                            {item.UserName}
                           </TableCell>
-                          <TableCell align="right">{item.cost}</TableCell>
+                          <TableCell align="right">{item.Amount}</TableCell>
                           {/* <TableCell align="right">{item.amount}</TableCell>
                             <TableCell align="right">
                               {Math.round(item.amount * item.price * 100) / 100}
@@ -140,9 +140,6 @@ export default function ReserveList({ orders }: { orders: Order[] }) {
               </TableCell>
               <TableCell align="right">
                 <div className="font-bold">قیمت</div>
-              </TableCell>
-              <TableCell align="right">
-                <div className="font-bold">فاکتور</div>
               </TableCell>
 
               <TableCell />

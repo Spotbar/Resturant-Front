@@ -3,7 +3,13 @@ import Select from "react-select";
 import { useEffect, useState } from "react";
 import Restaurant from "../../Interface/Restaurant";
 import SharedGroup from "../../Interface/SharedGroup";
-const SharedList = (props: any) => {
+
+interface SharedListProps {
+
+  // SharedGroupList: (order: IOrder) => void;
+  SharedGroupList: (SharedGroups: SharedGroup[]) => void;
+}
+const SharedList = (props: SharedListProps) => {
   const [grouplist, setGrouplist] = useState<SharedGroup[]>([]);
   const employeeList: Restaurant[] = [
     {
@@ -76,11 +82,12 @@ const SharedList = (props: any) => {
             },
           })}
         />
-        <button
-          className=" block whitespace-nowrap mx-5 border border-1 bg-orange-200 border-amber-600   p-2 rounded-md text-amber-600 text-sm sm:text-base"
+        <div
+   
+          className=" block whitespace-nowrap mx-5 border border-1 bg-orange-200 border-amber-600   p-2 rounded-md text-amber-600 text-sm sm:text-base cursor-pointer"
           onClick={() => {
             if (employee.id != "") {
-              var ides = grouplist.map((item) => item.name);
+              var ides = grouplist.map((item) => item.UserName);
               console.log("ides" + ides);
               var isDuplicate = ides.includes(employee.label);
               console.log(isDuplicate);
@@ -88,14 +95,14 @@ const SharedList = (props: any) => {
               if (!isDuplicate) {
                 setGrouplist((grouplist) => [
                   ...grouplist,
-                  { id: employee.label, name: employee.label, cost: "50000" },
+                  { UserId: employee.label, UserName: employee.label, Amount: "50000" },
                 ]);
               }
             }
           }}
         >
           افزودن مشترک
-        </button>
+        </div>
       </div>
       <div
         className={
@@ -104,17 +111,17 @@ const SharedList = (props: any) => {
       >
         {grouplist?.map((item) => (
           <div
-            key={item.id}
+            key={item.UserId}
             className={
               "w-full flex flex-col justify-center items-center p-2 shadow-lg border border-1 border-amber-600 rounded-md "
             }
           >
-            <div className="text-center  ">{item.name}</div>
+            <div className="text-center">{item.UserName}</div>
             <div className="w-full">
               <input
                 className="text-center w-full "
                 placeholder="قیمت (ریال)"
-                defaultValue={item.cost}
+                defaultValue={item.Amount}
               />
             </div>
 

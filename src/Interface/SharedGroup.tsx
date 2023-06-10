@@ -1,7 +1,7 @@
 interface SharedGroup{
-    id: string
-    name:string
-    cost:string
+    UserId: string
+    UserName:string
+    Amount:string
 
 }
 export default SharedGroup
