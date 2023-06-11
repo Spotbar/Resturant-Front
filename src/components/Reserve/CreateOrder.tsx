@@ -21,8 +21,6 @@ interface OrderProps {
   handleSubmit: (order: IOrder) => void;
 }
 const CreateOrder: React.FC<OrderProps> = ({ handleSubmit }) => {
-  const [sharedItems, setSharedItems] = useState<SharedGroup[]>([]);
-
   const SharedGroupListHandler = (sharedList: SharedGroup[]) => {
     // do something with value in parent component, like save to state
     console.log(sharedList);
@@ -38,8 +36,6 @@ const CreateOrder: React.FC<OrderProps> = ({ handleSubmit }) => {
     Restaurant: { Id: "", Name: "" },
     UserOrders: [],
   };
-
-  const [orders, setOrders] = useState<IOrder[]>([]);
 
   const [restaurants, setRestaurants] = useState<IRestaurantSelect[]>([]);
   const [selectRestaurant, setSelectRestaurant] = useState<IRestaurantSelect>({
@@ -57,7 +53,6 @@ const CreateOrder: React.FC<OrderProps> = ({ handleSubmit }) => {
       setRestaurants(options);
     }
   }, [data]);
-
 
   const handleRestaurantSelectionChange = (
     option: IRestaurantSelect | null
@@ -96,6 +91,13 @@ const CreateOrder: React.FC<OrderProps> = ({ handleSubmit }) => {
     validationSchema,
     validateOnMount: true,
   });
+
+  useEffect(() => {
+    if (!formik.getFieldProps("IsShared").value) {
+      formik.setFieldValue("UserOrders", []);
+    }
+  }, [formik.getFieldProps("IsShared").value]);
+
   return (
     <div>
       <div className="text-amber-600 text-lg mb-6"> ثبت سفارش</div>
