@@ -169,6 +169,17 @@ const Sidebar = () => {
           <p className="w-full text-right">فاکتور</p>
         </ListItemButton>
 
+        <ListItemButton
+          onClick={() => {
+            navigate("/UnrecordedOrders");
+          }}
+        >
+          <ListItemIcon>
+            <ReceiptLongOutlinedIcon />
+          </ListItemIcon>
+          <p className="w-full text-right">سفارشات تایید نشده</p>
+        </ListItemButton>
+
         <ListItemButton>
           <ListItemIcon>
             <CreditScoreOutlinedIcon />

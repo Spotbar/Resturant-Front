@@ -10,10 +10,10 @@ import Profile from "../pages/Profile";
 import CreateRestaurant from "../pages/Admin/Restaurant/CreateRestaurant";
 import EditRestaurant from "../pages/Admin/Restaurant/EditRestaurant";
 import Restaurants from "../pages/Admin/Restaurant/Restaurants";
-import FactorTable from "../components/Factor/factorTable";
 import Factors from "../pages/Admin/Factor/Factors";
 import CreateFactor from "../pages/Admin/Factor/CreateFactor";
 import EditFactor from "../pages/Admin/Factor/EditFactor";
+import UnRecordedOrders from "../pages/Admin/UnrecordedOrders/UnRecordedOrders";
 
 export default function AspadanaRoutes() {
   return (
@@ -35,6 +35,7 @@ export default function AspadanaRoutes() {
       <Route path="/Factors" element={<Factors />} />
       <Route path="/CreateFactor" element={<CreateFactor />} />
       <Route path="/EditFactor/:id" element={<EditFactor />} />
+      <Route path="/UnrecordedOrders" element={<UnRecordedOrders />} />
     </Routes>
   );
 }
