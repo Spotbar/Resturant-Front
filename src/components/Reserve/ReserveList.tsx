@@ -12,12 +12,21 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { createTheme, ThemeProvider } from "@mui/material";
-import Order from "../../Interface/IOrder";
-
-function Row(props: { _order: Order }) {
+import IOrder from "../../Interface/IOrder";
+interface RowProps {
+  _order: IOrder;
+  onDelete: (orderId: string) => void;
+}
+function Row(props: RowProps) {
   const [open, setOpen] = React.useState(false);
   const { _order } = props;
+
+  const handleDelete = () => {
+    props.onDelete(_order.Id);
+  };
+
   return (
     <React.Fragment>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -26,7 +35,6 @@ function Row(props: { _order: Order }) {
         </TableCell>
         <TableCell align="right">{_order.Restaurant.Name}</TableCell>
         <TableCell align="right">{_order.Cost}</TableCell>
-      
 
         <TableCell>
           {_order.IsShared ? (
@@ -56,6 +64,17 @@ function Row(props: { _order: Order }) {
               {open ? <KeyboardArrowDownIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           )}
+        </TableCell>
+
+        <TableCell align="right">
+          <div
+            className="text-red-500 text-sm cursor-pointer"
+            onClick={handleDelete}
+          >
+            حذف
+            <DeleteIcon fontSize="small" className="text-red-500" />
+            {"   "}
+          </div>
         </TableCell>
       </TableRow>
 
@@ -108,8 +127,13 @@ function Row(props: { _order: Order }) {
   );
 }
 
-export default function ReserveList({ orders }: { orders: Order[] }) {
-  const [ordersData, setOrdersData] = React.useState<Order[]>([]);
+interface ReserveListProps {
+  orders: IOrder[];
+  onDelete: (orderId: string) => void;
+}
+export default function ReserveList(props: ReserveListProps) {
+  const { orders, onDelete } = props;
+  const [ordersData, setOrdersData] = React.useState<IOrder[]>([]);
 
   React.useEffect(() => {
     setOrdersData(orders);
@@ -149,9 +173,10 @@ export default function ReserveList({ orders }: { orders: Order[] }) {
             {/* {rows.map((row) => (
               <Row key={row.name} row={row} />
             ))} */}
-
             {ordersData &&
-              ordersData.map((row, index) => <Row key={index} _order={row} />)}
+              ordersData.map((row, index) => (
+                <Row key={index} _order={row} onDelete={onDelete} />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>

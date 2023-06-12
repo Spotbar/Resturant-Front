@@ -15,6 +15,7 @@ import { getRestaurants } from "../../api";
 import IRestaurant from "../../Interface/IRestaurant";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import uniqueId from 'lodash/uniqueId';
 
 interface OrderProps {
   // onOrderChange: (newData: Order) => void;
@@ -85,7 +86,11 @@ const CreateOrder: React.FC<OrderProps> = ({ handleSubmit }) => {
   const formik = useFormik({
     initialValues,
     onSubmit: (values, { resetForm }) => {
-      handleSubmit(values); // Call the parent's form submission handler function
+      const orderWithId = {
+        ...values,
+        Id:uniqueId('ClientId-'), // Generate a new UUID
+      };
+      handleSubmit(orderWithId);
       resetForm();
     },
     validationSchema,
