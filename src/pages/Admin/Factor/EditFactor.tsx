@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Factor from "../../../components/Factor/Factor";
 import IFactor from "../../../Interface/IFactor";
+import getFactorByIdService from "../../../services/apiRequest/factor/getFactorByIdService";
 
 const EditFactor = () => {
   const navigate = useNavigate();
@@ -39,10 +40,37 @@ const EditFactor = () => {
         if (data) {
           setFactor(data)
         }
+        
       },
+      staleTime: 0, // Disable caching
     }
   );
 
+
+
+  // const queryKey = ['resource', "870a65c5-957a-4d72-15d4-08db5e8bf624"]; // Include id in query key
+  // const { isLoading, error, data } = useQuery(queryKey, async () => {
+  //   const factor = await getFactorById("870a65c5-957a-4d72-15d4-08db5e8bf624");
+  //   return factor;
+  // }, {
+  //   onSuccess(data) {
+  //     console.log(data);
+  //     setFactor(data)
+  //   },
+  // });
+
+  // const queryKey = ['EditFactor', Id];
+
+  // const { isLoading, error, data } = useQuery(queryKey, async () => {
+  //   const factor = await getFactorByIdService(Id);
+  //   return factor;
+  // }, {
+  //   onSuccess: (data) => {
+  //     console.log(data);
+  //     setFactor(data);
+  //   },
+  //   staleTime: 0, // Disable caching
+  // });
 
   useEffect(() => {
     console.log(factor);

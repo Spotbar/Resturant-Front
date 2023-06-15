@@ -33,7 +33,6 @@ const Factor = (props: FactorComponentProps) => {
     console.log(factorData);
   }, []);
 
-
   const { isLoading, error, data } = useQuery("restaurants", getRestaurants, {
     onSuccess(data) {},
   });
@@ -46,7 +45,6 @@ const Factor = (props: FactorComponentProps) => {
       setRestaurants(options);
     }
   }, [data]);
-
 
   const initialValues: IFactor = {
     Id: "",
@@ -61,19 +59,22 @@ const Factor = (props: FactorComponentProps) => {
 
   useEffect(() => {
     if (factorData) {
-      formik.setFieldValue("Id", factorData.Id);
-      formik.setFieldValue("FactorNumber", factorData.FactorNumber);
-      formik.setFieldValue("FactorDate", factorData.FactorDate);
-      formik.setFieldValue("DeliveryCost", factorData.DeliveryCost);
-      formik.setFieldValue("FactorAmount", factorData.FactorAmount);
-      formik.setFieldValue("IsClosed", factorData.IsClosed);
-      formik.setFieldValue(
-        "IsDeliveryByCompanyPaid",
-        factorData.IsDeliveryByCompanyPaid
-      );
-      formik.setFieldValue("Restaurant", {
-        Id: selectRestaurant.id,
-        Name: selectRestaurant.label,
+      formik.setValues({
+        Id: factorData.Id,
+        FactorNumber: factorData.FactorNumber,
+        FactorDate: factorData.FactorDate,
+        DeliveryCost: factorData.DeliveryCost,
+        FactorAmount: factorData.FactorAmount,
+        IsClosed: factorData.IsClosed,
+        IsDeliveryByCompanyPaid: factorData.IsDeliveryByCompanyPaid,
+        Restaurant: {
+          Id: factorData.Restaurant.Id,
+          Name: factorData.Restaurant.Name,
+        },
+      });
+      setSelectRestaurant({
+        id: factorData.Restaurant.Id,
+        label: factorData.Restaurant.Name,
       });
     }
   }, [factorData]);
@@ -102,7 +103,6 @@ const Factor = (props: FactorComponentProps) => {
 
   const handleRestaurantSelectionChange = (option: Restaurant | null) => {
     if (option) {
-
       formik.setFieldValue("Restaurant", {
         Id: option.id,
         Name: option.label,

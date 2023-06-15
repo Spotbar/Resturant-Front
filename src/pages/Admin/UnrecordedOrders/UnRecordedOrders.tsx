@@ -3,9 +3,10 @@ import React from "react";
 import Main from "../../../components/Layout/Main";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
-import {  } from "../../../api";
+import {} from "../../../api";
 import { useEffect, useState } from "react";
 import UnRecordedOrdersTable from "../../../components/UnrecordedOrder/UnRecordedOrdersTable";
+import { IUnrecordedOrder } from "../../../Interface/IUnrecordedOrder";
 
 const UnRecordedOrders: React.FC = () => {
   // Sample data
@@ -22,14 +23,21 @@ const UnRecordedOrders: React.FC = () => {
   //   }
   // }, [data]);
 
+  const ordersFromServer: IUnrecordedOrder[] = [
+    {
+      Id: "1",
+      OrderDate: "2023-05-21T20:30:00.000Z",
+      Restaurant: { Id: "", Name: "گلی" },
+      UnrecordCount: 3,
+    },
+  ];
 
   const navigate = useNavigate();
 
   return (
     <Main>
       <div className="text-amber-600 text-lg mb-6"> لیست سفارشات ثبت نشده </div>
-      <UnRecordedOrdersTable orders={[]}/>
-
+      <UnRecordedOrdersTable orders={ordersFromServer} />
     </Main>
   );
 };

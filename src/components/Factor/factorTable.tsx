@@ -6,6 +6,8 @@ import moment from "jalali-moment";
 import IFactor from "../../Interface/IFactor";
 import convertHelpers from "../../utils/helpers/convert.helpers";
 import { useNavigate } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import EditIcon from "../../assets/icons/EditIcon";
 
 interface MaterialReactTableProps {
   factors: IFactor[];
@@ -46,7 +48,7 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
 
           return (
             <span
-            className="text-amber-900 underline cursor-pointer"
+              className="text-amber-900 underline cursor-pointer"
               onClick={() => {
                 navigate(`/EditFactor/${factorId}`);
               }}
@@ -79,42 +81,63 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
         className: "rtl",
       },
       {
-        accessorKey: "DeliveryCost", //access nested data with dot notation
-        header: "پیک",
-        className: "rtl",
-      },
-      {
-        accessorKey: "IsDeliveryByCompanyPaid", //access nested data with dot notation
-        header: "سهم شرکت",
+        accessorKey: "Id", //access nested data with dot notation
+        header: "عملیات",
         className: "rtl",
         Cell: ({ cell }) => {
-          return cell.getValue<boolean>() ? (
-            <input
-              className="cursor-pointer accent-amber-800 focus:accent-amber-800"
-              type="checkbox"
-              checked
-            />
+          const factorId = cell.row.original.Id;
+          return cell.getValue<string>() ? (
+            <IconButton
+              aria-label="edit"
+             
+              onClick={() => {
+                navigate(`/EditFactor/${factorId}`);
+              }}
+            >
+              <EditIcon />
+            </IconButton>
           ) : (
-            <input type="checkbox" disabled />
+            <span></span>
           );
         },
       },
-      {
-        accessorKey: "IsClosed", //access nested data with dot notation
-        header: "بسته",
-        className: "rtl",
-        Cell: ({ cell }) => {
-          return cell.getValue<boolean>() ? (
-            <input
-              className="cursor-pointer accent-amber-800 focus:accent-amber-800"
-              type="checkbox"
-              checked
-            />
-          ) : (
-            <input type="checkbox" disabled />
-          );
-        },
-      },
+      // {
+      //   accessorKey: "DeliveryCost", //access nested data with dot notation
+      //   header: "پیک",
+      //   className: "rtl",
+      // },
+      // {
+      //   accessorKey: "IsDeliveryByCompanyPaid", //access nested data with dot notation
+      //   header: "سهم شرکت",
+      //   className: "rtl",
+      //   Cell: ({ cell }) => {
+      //     return cell.getValue<boolean>() ? (
+      //       <input
+      //         className="cursor-pointer accent-amber-800 focus:accent-amber-800"
+      //         type="checkbox"
+      //         checked
+      //       />
+      //     ) : (
+      //       <input type="checkbox" disabled />
+      //     );
+      //   },
+      // },
+      // {
+      //   accessorKey: "IsClosed", //access nested data with dot notation
+      //   header: "بسته",
+      //   className: "rtl",
+      //   Cell: ({ cell }) => {
+      //     return cell.getValue<boolean>() ? (
+      //       <input
+      //         className="cursor-pointer accent-amber-800 focus:accent-amber-800"
+      //         type="checkbox"
+      //         checked
+      //       />
+      //     ) : (
+      //       <input type="checkbox" disabled />
+      //     );
+      //   },
+      // },
     ],
     []
   );
