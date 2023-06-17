@@ -271,7 +271,6 @@ const Factor = (props: FactorComponentProps) => {
                   );
                 }}
               />
-
               <label className=" block whitespace-nowrap w-full h-fit p-1 cursor-pointer  ">
                 پیک شرکت
               </label>

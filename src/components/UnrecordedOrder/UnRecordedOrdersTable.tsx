@@ -60,7 +60,7 @@ const UnRecordedOrdersTable: React.FC<MaterialReactTableProps> = (props) => {
             <span
               className="text-amber-900 underline cursor-pointer"
               onClick={() => {
-                navigate(`CreateFactor/${ordersId}`);
+                navigate(`CreateOrdersFactor/${ordersId}`);
               }}
             >
               {cell.getValue<string>()}
