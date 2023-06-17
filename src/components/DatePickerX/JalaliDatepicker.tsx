@@ -23,7 +23,6 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
     value: Date | null,
     context: PickerChangeHandlerContext<DateValidationError>
   ) => {
-    // Pass the value and context to the parent component
     onDateChange(value, context);
   };
 
@@ -40,12 +39,12 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
         MuiSvgIcon: {
           styleOverrides: {
             root: {
-              color: "#a8a29e", 
+              color: "#a8a29e",
               "&:hover": {
-                color: "#d97706", 
+                color: "#d97706",
               },
               "&:active": {
-                color: "#d97706", 
+                color: "#d97706",
               },
             },
           },
@@ -53,10 +52,8 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
         MuiTextField: {
           styleOverrides: {
             root: {
-              // height: "70px", 
+              // height: "70px",
               display: "block",
-       
-           
             },
           },
         },
@@ -73,9 +70,11 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
     faIR // core translations
   );
 
+
+
   return (
     <ThemeProvider theme={theme}>
-      <div dir="rtl" >
+      <div dir="rtl">
         <LocalizationProvider
           dateAdapter={AdapterDateFnsJalali}
           localeText={{
@@ -84,19 +83,13 @@ export default function JalaliDatepicker(props: ChildComponentProps) {
             // todayButtonLabel: "Set today",
             // clearButtonLabel: "None",
           }}
-        >
+        >        
           <DatePicker
             // label="Date Picker"
             // defaultValue={new Date(2022, 1, 1)}
-            defaultValue={new Date(selectedDate)}
-            onChange={handleDateChange}
-            // onChange={(value, context) => {
-            //   // formik.setFieldValue('selectedDate', value);
-            //   // You can access the validation result from the context parameter if needed
-            //   console.log(value);
-            //   console.log(context);
-            // }}
-            slotProps={{ textField: { size: 'small' } }}
+            value={new Date(selectedDate)}
+            onChange={ handleDateChange}
+            slotProps={{ textField: { size: "small" } }}
           />
         </LocalizationProvider>
       </div>
