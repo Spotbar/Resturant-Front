@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import IFactor from "../../../Interface/IFactor";
 import { useNavigate, useParams } from "react-router-dom";
 import Factor from "../../../components/Factor/Factor";
-import FactorHeadDetails from "../../../components/Factor/FactorHeadDetails";
 import SelectFactorItemsTable from "../../../components/Factor/SelectFactorItemsTable";
+import FactorHeadSelect from "../../../components/Factor/FactorHeadSelect";
 
 const CreateOrdersFactor = () => {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +14,14 @@ const CreateOrdersFactor = () => {
   useEffect(() => {
     if (id) setId(id);
   }, [id]);
+
+  const [selectedOrdersIds, setSelectedOrdersIds] = useState<string[]>([]);
+  const [ordersCost, setOrdersCost] = useState<number>(0);
+
+  const handleSelectionChange = (selectedIds: string[], totalCost: number) => {
+    setSelectedOrdersIds(selectedIds);
+    setOrdersCost(totalCost);
+  };
 
   // const initialValues: IFactor = {
   //   Id: "",
@@ -43,9 +51,28 @@ const CreateOrdersFactor = () => {
   return (
     <Main>
       <div className="text-amber-600 text-lg mb-6"> ایجاد فاکتور</div>
-      <FactorHeadDetails />
-      <div className="w-auto h-[1px] m-5  border-2 border-dotted "></div>
-      <SelectFactorItemsTable/>
+      <FactorHeadSelect />
+      {/* <div className="w-auto h-[1px] m-5  border-2 border-dotted "></div> */}
+      <br />
+      <SelectFactorItemsTable onSelectionChange={handleSelectionChange} />
+      <div className="text-base mt-4">
+        {" "}
+        مجموع سفارشات ثبت شده <span className="text-yellow-900">{ordersCost} </span>{" "}
+      </div>
+      <div className="text-base mt-4">
+        {" "}
+        مجموع سفارشات همراه با پیک <span className="text-yellow-900">{ordersCost + 20000}</span>
+      </div>
+      <div className="my-5">
+        <button
+          className="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-3 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto sm:px-14 text-lg"
+          onClick={() => {
+            // navigate("/CreateFactor");
+          }}
+        >
+          ایجاد فاکتور
+        </button>
+      </div>
     </Main>
   );
 };

@@ -24,13 +24,13 @@ const FactorHeadDetails = () => {
         <div className="w-1/3 text-slate-700  ">
           <span className="inline-block max-w-full truncate">پیک</span>
         </div>
-        <div className="w-full text-center text-yellow-900 ">54456</div>
+        <div className="w-full text-center text-yellow-900 ">20000</div>
       </div>
       <div className="flex gap-4 col-span-2">
         <div className="w-1/3 text-slate-700 overflow-hidden">
-          <span className="inline-block max-w-full truncate">مبلغ فاکتور</span>
+          <span className="inline-block max-w-full truncate">مبلغ نهایی فاکتور</span>
         </div>
-        <div className="w-full text-center text-yellow-900">32154665</div>
+        <div className="w-full text-center text-yellow-900">817000</div>
       </div>
     </div>
   );

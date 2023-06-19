@@ -14,3 +14,13 @@ interface IFactor {
   Restaurant: Restaurant;
 }
 export default IFactor;
+
+
+export interface ISelectFactor {
+  Id: string;
+  FactorNumber: string;
+  DeliveryCost: number;
+  FactorAmount: number;
+  IsClosed: boolean;
+  IsDeliveryByCompanyPaid: boolean;
+}
