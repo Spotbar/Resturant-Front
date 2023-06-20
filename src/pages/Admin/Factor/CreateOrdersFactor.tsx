@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import IFactor from "../../../Interface/IFactor";
 import { useNavigate, useParams } from "react-router-dom";
 import Factor from "../../../components/Factor/Factor";
-import SelectFactorItemsTable from "../../../components/Factor/SelectFactorItemsTable";
+
 import FactorHeadSelect from "../../../components/Factor/FactorHeadSelect";
+import SelectFactorItemsTable from "../../../components/Factor/SelectFactorItemsTable";
 
 const CreateOrdersFactor = () => {
   const { id } = useParams<{ id: string }>();

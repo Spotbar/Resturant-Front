@@ -50,7 +50,7 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
             <span
               className="text-amber-900 underline cursor-pointer"
               onClick={() => {
-                navigate(`/EditFactor/${factorId}`);
+                navigate(`/FactorDetails/${factorId}`);
               }}
             >
               {cell.getValue<string>()}
