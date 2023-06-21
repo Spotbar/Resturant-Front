@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Factor from "../../../components/Factor/Factor";
 import IFactor from "../../../Interface/IFactor";
-import getFactorByIdService from "../../../services/apiRequest/factor/getFactorByIdService";
 
 const EditFactor = () => {
   const navigate = useNavigate();
@@ -38,15 +37,12 @@ const EditFactor = () => {
       onSuccess(data) {
         console.log(data);
         if (data) {
-          setFactor(data)
+          setFactor(data);
         }
-        
       },
       staleTime: 0, // Disable caching
     }
   );
-
-
 
   // const queryKey = ['resource', "870a65c5-957a-4d72-15d4-08db5e8bf624"]; // Include id in query key
   // const { isLoading, error, data } = useQuery(queryKey, async () => {
@@ -77,7 +73,7 @@ const EditFactor = () => {
   }, [factor]);
 
   const editRestaurantMutation = useMutation(async (factor: IFactor) => {
-    console.log('')
+    console.log("");
     const data = await editFactorById(factor);
     if (data && data.data) {
       client.invalidateQueries("factors", { refetchInactive: true });
@@ -89,6 +85,7 @@ const EditFactor = () => {
     console.log(factorData);
     editRestaurantMutation.mutate(factorData);
   };
+
 
   if (isLoading) {
     return (
@@ -112,6 +109,8 @@ const EditFactor = () => {
     return null;
   }
 
+
+
   return (
     <Main>
       <Factor
@@ -120,6 +119,7 @@ const EditFactor = () => {
         title={"ویرایش فاکتور"}
         handleSubmit={handleFormSubmit}
       />
+
     </Main>
   );
 };

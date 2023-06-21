@@ -16,6 +16,7 @@ import EditFactor from "../pages/Admin/Factor/EditFactor";
 import FactorDetails from "../pages/Admin/Factor/FactorDetails";
 import UnRecordedOrders from "../pages/Admin/UnrecordedOrders/UnRecordedOrders";
 import CreateOrdersFactor from "../pages/Admin/Factor/CreateOrdersFactor";
+import EditOrdersFactor from "../pages/Admin/Factor/EditOrdersFactor";
 
 export default function AspadanaRoutes() {
   return (
@@ -37,6 +38,7 @@ export default function AspadanaRoutes() {
       <Route path="/Factors" element={<Factors />} />
       <Route path="/CreateFactor" element={<CreateFactor />} />
       <Route path="/EditFactor/:id" element={<EditFactor />} />
+      <Route path="/EditOrdersFactor/:id" element={<EditOrdersFactor />} />
       <Route path="/FactorDetails/:id" element={<FactorDetails />} />
       <Route path="/UnrecordedOrders" element={<UnRecordedOrders />} />
       <Route path="UnrecordedOrders/CreateOrdersFactor/:id" element={<CreateOrdersFactor />} />

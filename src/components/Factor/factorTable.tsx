@@ -47,14 +47,25 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
           const factorId = cell.row.original.Id;
 
           return (
-            <span
-              className="text-amber-900 underline cursor-pointer"
-              onClick={() => {
-                navigate(`/FactorDetails/${factorId}`);
-              }}
-            >
-              {cell.getValue<string>()}
-            </span>
+            // <span
+            //   className="text-amber-900 underline cursor-pointer"
+            //   onClick={() => {
+            //     navigate(`/FactorDetails/${factorId}`);
+            //   }}
+            // >
+            //   {cell.getValue<string>()}
+            // </span>
+            <IconButton
+            aria-label="edit"
+            onClick={() => {
+              navigate(`/FactorDetails/${factorId}`);
+            }}
+          >
+            {/* <EditIcon /> */}
+            <div className="text-sm text-amber-900 cursor-pointer">
+            {cell.getValue<string>()}
+            </div>
+          </IconButton>
           );
         },
       },
@@ -82,20 +93,36 @@ const FactorTable: React.FC<MaterialReactTableProps> = (props) => {
       },
       {
         accessorKey: "Id", //access nested data with dot notation
-        header: "عملیات",
+        header: "ویرایش",
         className: "rtl",
         Cell: ({ cell }) => {
           const factorId = cell.row.original.Id;
           return cell.getValue<string>() ? (
-            <IconButton
-              aria-label="edit"
-             
-              onClick={() => {
-                navigate(`/EditFactor/${factorId}`);
-              }}
-            >
-              <EditIcon />
-            </IconButton>
+            <div className="flex flex-row">
+              <IconButton
+                aria-label="edit"
+                onClick={() => {
+                  navigate(`/EditFactor/${factorId}`);
+                }}
+              >
+                {/* <EditIcon /> */}
+                <div className="text-sm text-amber-900 cursor-pointer">
+                   فاکتور
+                </div>
+              </IconButton>
+              <span className="text-sm text-amber-900 my-2">|</span>
+              <IconButton
+                aria-label="edit"
+                onClick={() => {
+                  navigate(`/EditOrdersFactor/${factorId}`);
+                }}
+              >
+                {/* <EditIcon /> */}
+                <div className="text-sm text-amber-900 cursor-pointer">
+                   سفارشات
+                </div>
+              </IconButton>
+            </div>
           ) : (
             <span></span>
           );
